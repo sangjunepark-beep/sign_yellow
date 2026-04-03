@@ -109,9 +109,9 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f7f8fa;co
         <canvas id="editorCanvas"></canvas>
         <div class="notice-box">
           <div class="notice-title">🚨 안내사항</div>
-          상호/기관명 직접 입력시에는 시안이 약간 길어보일 수 있습니다.<br>
-          실제 제품은 상세페이지의 사이즈이며, 디자인요소만 상단으로 이동되고 상호가 들어갑니다.<br>
-          <strong>이 부분은 컨페없이 진행되오니 확인바랍니다.</strong>
+          상호/기관명 직접 입력시에는 시안이 약간 금어보일 수 있습니다.<br>
+          실제 제품은 상세페이지의 사이즈이며, 디자인요소만 상담으로 이동되고 상호가 들어갑니다.<br>
+          <strong>이 부분은 컨펌에이 진행되오니 확인바랍니다.</strong>
         </div>
       </div>
       <div class="controls">
@@ -190,7 +190,7 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f7f8fa;co
           <label><input type="radio" name="orderChannel" value="hanasignmall.com">Hanasignmall.com</label>
           <label><input type="radio" name="orderChannel" value="smartstore">스마트스토어</label>
           <label><input type="radio" name="orderChannel" value="gmarket">G마켓</label>
-          <label><input type="radio" name="orderChannel" value="auction">옥션</label>
+          <label><input type="radio" name="orderChannel" value="auction">옠션</label>
           <label><input type="radio" name="orderChannel" value="coupang">쿠팡</label>
           <label><input type="radio" name="orderChannel" value="11st">11번가</label>
           <label><input type="radio" name="orderChannel" value="phone">전화주문</label>
@@ -206,7 +206,7 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f7f8fa;co
       </div>
 
       <button class="btn-submit" id="btnSubmit">저장하고 발송하기</button>
-      <div class="warning-text">발송 후에는 수정이 어렵사오니 반드시 심사숙고해주셔서 발송 바랍니다.</div>
+      <div class="warning-text">발송 후에는 수정이 어렵사오니 반드시 실사쉙고해주셔서 발송 바랍니다.</div>
     </div>
   </div>
 </div>
@@ -264,8 +264,8 @@ function renderDesign(canvas, des, mainText, fontFamily, fontSize, fontWeight, t
   const iw = img.naturalWidth;
   const ih = img.naturalHeight;
 
-  // 마지막 불투명 행 (모든 시안 공통: 940)
-  const lastOpaqueY = 940;
+  // 마지막 불투명 행 (모든 시안 공통: 939)
+  const lastOpaqueY = 939;
   const stretchH = Math.round(ih * (STRETCH_PX / 1000));
   const bottomPad = Math.round(ih * (BOTTOM_PAD_PX / 1000));
   const cropH = lastOpaqueY + 1;
@@ -355,11 +355,11 @@ function initColorRow() {
     row.appendChild(chip);
   });
 
-  // 배경 색상 팔레트
+  // 배경 색상 파레트
   const bgRow = document.getElementById('bgColorRow');
   const BG_COLORS = [
     {n:'흰색',v:'#ffffff'},{n:'검정',v:'#1a1a1a'},{n:'빨강',v:'#CC0000'},{n:'파랑',v:'#003399'},
-    {n:'노랑',v:'#FFD700'},{n:'초록',v:'#006633'},{n:'주황',v:'#FF6600'},{n:'연회색',v:'#eeeeee'},
+    {n:'노랑',v:'#FFD700'},{n:'초록',v:'#006633'},{n:'주황',v:'#FF6600'},{n:'엱회색',v:'#eeeeee'},
   ];
   BG_COLORS.forEach(c => {
     const chip = document.createElement('div');
@@ -494,7 +494,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateEditor();
   });
   document.getElementById('bgPadding').addEventListener('input', e => {
-    document.getElementById('bgPaddingLabel').textContent = e.target.value + 'px';
+    document.getElentById('bgPaddingLabel').textContent = e.target.value + 'px';
     updateEditor();
   });
 
