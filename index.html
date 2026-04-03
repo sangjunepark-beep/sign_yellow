@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>차량 2부제 A형 입간판 노랑 - 상호명 입력</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f7f8fa;color:#333;font-size:14px}
+
+/* 헤더 */
+.page-header{background:#fff;border-bottom:1px solid #e0e0e0;padding:28px 0 24px;text-align:center}
+.page-header h1{font-size:22px;font-weight:900;color:#1a1a1a;margin-bottom:6px}
+.page-header p{font-size:14px;color:#666;font-weight:400}
+
+/* 시안 선택 바 */
+.design-bar{background:#fff;border-bottom:1px solid #eee;padding:20px 0}
+.design-bar-inner{max-width:900px;margin:0 auto;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;padding:0 20px}
+.design-thumb{width:100px;height:100px;border:2px solid #e0e0e0;border-radius:8px;overflow:hidden;cursor:pointer;transition:all 0.15s;position:relative}
+.design-thumb:hover{border-color:#888}
+.design-thumb.selected{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,0.2)}
+.design-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.design-thumb .label{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.55);color:#fff;font-size:11px;text-align:center;padding:2px 0;font-weight:700}
+
+/* 메인 영역 */
+.main-area{max-width:900px;margin:24px auto;padding:0 20px}
+.editor-card{background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.06);overflow:hidden}
+.editor-inner{display:flex;gap:24px;padding:24px}
+.canvas-wrap{flex:1;text-align:center;min-width:0}
+.canvas-wrap canvas{width:100%;max-width:460px;border:1px solid #e0e0e0;border-radius:6px;background:#fafafa}
+
+/* 안내 박스 */
+.notice-box{margin-top:14px;padding:14px 16px;background:#fef2f2;border:2px solid #dc2626;border-radius:8px;font-size:13px;color:#991b1b;line-height:1.8;text-align:left;max-width:460px;display:inline-block}
+.notice-box .notice-title{font-size:14px;font-weight:700;color:#dc2626;margin-bottom:4px}
+
+/* 컨트롤 */
+.controls{width:260px;flex-shrink:0}
+.ctrl-group{margin-bottom:14px}
+.ctrl-group label{display:block;font-size:12px;font-weight:700;color:#555;margin-bottom:5px}
+.ctrl-input{width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:6px;font-size:15px;font-family:inherit}
+.ctrl-input:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,0.1)}
+.ctrl-select{width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;font-family:inherit;appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' fill='none' stroke='%23666' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 12px center}
+.range-row{display:flex;align-items:center;gap:8px}
+.range-row input[type="range"]{flex:1;accent-color:#2563eb}
+.range-row span{font-size:12px;color:#666;min-width:36px;text-align:right;font-weight:500}
+.color-row{display:flex;gap:5px;flex-wrap:wrap}
+.color-chip{width:28px;height:28px;border-radius:4px;border:2px solid #ddd;cursor:pointer;transition:all 0.12s}
+.color-chip:hover{transform:scale(1.15)}
+.color-chip.sel{border-color:#2563eb;box-shadow:0 0 0 2px rgba(37,99,235,0.4)}
+
+/* 다운로드 버튼 */
+.btn-row{display:flex;gap:8px;margin-top:12px}
+.btn-dl{flex:1;padding:10px;background:#059669;color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+.btn-dl:hover{background:#047857}
+.btn-reset{padding:10px 16px;background:#fff;color:#dc2626;border:1px solid #fca5a5;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit}
+.btn-reset:hover{background:#fef2f2}
+
+/* 구분선 */
+.divider{height:1px;background:#e5e7eb;margin:0}
+
+/* 하단 주문 섹션 */
+.order-section{padding:28px 24px}
+.order-section h3{font-size:16px;font-weight:700;margin-bottom:20px;color:#1a1a1a}
+
+.order-row{display:flex;align-items:flex-start;margin-bottom:20px;gap:16px}
+.order-label{width:100px;font-size:13px;font-weight:700;color:#555;padding-top:8px;flex-shrink:0}
+.radio-group{display:flex;flex-wrap:wrap;gap:8px 16px}
+.radio-group label{display:flex;align-items:center;gap:5px;font-size:13px;cursor:pointer;padding:6px 0}
+.radio-group input[type="radio"]{accent-color:#2563eb;width:16px;height:16px}
+.phone-input{padding:10px 12px;border:1px solid #d1d5db;border-radius:6px;font-size:14px;font-family:inherit;width:280px}
+.phone-input:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,0.1)}
+
+/* 발송 버튼 */
+.btn-submit{width:100%;padding:16px;background:#2563eb;color:#fff;border:none;border-radius:8px;font-size:17px;font-weight:900;cursor:pointer;font-family:inherit;margin-top:8px;transition:background 0.15s}
+.btn-submit:hover{background:#1d4ed8}
+
+/* 경고문 */
+.warning-text{text-align:center;margin-top:16px;padding:12px;font-size:13px;color:#b91c1c;font-weight:500;line-height:1.6}
+
+@media(max-width:768px){
+  .editor-inner{flex-direction:column}
+  .controls{width:100%}
+  .design-thumb{width:80px;height:80px}
+  .phone-input{width:100%}
+  .order-row{flex-direction:column;gap:6px}
+  .order-label{width:auto;padding-top:0}
+}
+</style>
+</head>
+<body>
+
+<!-- 헤더 -->
+<div class="page-header">
+  <h1>차량 2부제 A형 입간판 노랑</h1>
+  <p>시안 선택 후 상호명을 넣어주세요</p>
+</div>
+
+<!-- 시안 선택 바 -->
+<div class="design-bar">
+  <div class="design-bar-inner" id="designBar"></div>
+</div>
+
+<!-- 메인 에디터 -->
+<div class="main-area">
+  <div class="editor-card">
+    <div class="editor-inner">
+      <div class="canvas-wrap">
+        <canvas id="editorCanvas"></canvas>
+        <div class="notice-box">
+          <div class="notice-title">🚨 안내사항</div>
+          상호/기관명 직접 입력시에는 시안이 약간 길어보일 수 있습니다.<br>
+          실제 제품은 상세페이지의 사이즈이며, 디자인요소만 상단으로 이동되고 상호가 들어갑니다.<br>
+          <strong>이 부분은 컨페없이 진행되오니 확인바랍니다.</strong>
+        </div>
+      </div>
+      <div class="controls">
+        <div class="ctrl-group">
+          <label>상호/기관명 (1줄)</label>
+          <input class="ctrl-input" type="text" id="inputText" placeholder="예: 하나아파트" maxlength="20">
+        </div>
+        <div class="ctrl-group">
+          <label>글꼴</label>
+          <select class="ctrl-select" id="fontFamily">
+            <option value="Noto Sans KR">Noto Sans KR</option>
+            <option value="Malgun Gothic">맑은 고딕</option>
+            <option value="Arial Black">Arial Black</option>
+          </select>
+        </div>
+        <div class="ctrl-group">
+          <label>글자 크기</label>
+          <div class="range-row"><input type="range" id="fontSize" min="14" max="48" value="22"><span id="fontSizeLabel">22px</span></div>
+        </div>
+        <div class="ctrl-group">
+          <label>글자 색상</label>
+          <div class="color-row" id="colorRow"></div>
+        </div>
+        <div class="ctrl-group">
+          <label>세로 위치 조정</label>
+          <div class="range-row"><input type="range" id="posY" min="-100" max="30" value="0"><span id="posYLabel">0</span></div>
+        </div>
+        <div class="ctrl-group">
+          <label>좌우 위치 조정</label>
+          <div class="range-row"><input type="range" id="posX" min="-50" max="50" value="0"><span id="posXLabel">0</span></div>
+        </div>
+        <div class="ctrl-group">
+          <label>글자 굵기</label>
+          <select class="ctrl-select" id="fontWeight">
+            <option value="700">굵게 (Bold)</option>
+            <option value="900">매우 굵게 (Black)</option>
+            <option value="500">보통</option>
+            <option value="400">얇게</option>
+          </select>
+        </div>
+        <div class="ctrl-group">
+          <label>글자 배경</label>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <label style="font-size:13px;cursor:pointer;display:flex;align-items:center;gap:4px"><input type="checkbox" id="textBgOn" style="accent-color:#2563eb;width:16px;height:16px"> 배경 사용</label>
+          </div>
+          <div id="textBgOptions" style="display:none">
+            <div style="margin-bottom:6px">
+              <label style="font-size:11px;color:#888;margin-bottom:3px;display:block">배경 색상</label>
+              <div class="color-row" id="bgColorRow"></div>
+              <div style="margin-top:6px">
+                <button id="btnEyedropper" style="padding:5px 10px;border:1px solid #d1d5db;border-radius:4px;font-size:12px;cursor:pointer;background:#fff;font-family:inherit" title="이미지에서 배경 색상 추출">🎨 스포이드</button>
+                <span id="eyedropperStatus" style="font-size:11px;color:#999;margin-left:6px"></span>
+              </div>
+            </div>
+            <div>
+              <label style="font-size:11px;color:#888;margin-bottom:3px;display:block">배경 여백 (패딩)</label>
+              <div class="range-row"><input type="range" id="bgPadding" min="2" max="20" value="8"><span id="bgPaddingLabel">8px</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-reset" id="btnReset">초기화</button>
+          <button class="btn-dl" id="btnDownload">이미지 다운로드</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- 주문 정보 -->
+    <div class="order-section">
+      <div class="order-row">
+        <div class="order-label">주문처 선택</div>
+        <div class="radio-group">
+          <label><input type="radio" name="orderChannel" value="hanasignmall.kr" checked>Hanasignmall.kr</label>
+          <label><input type="radio" name="orderChannel" value="hanasignmall.com">Hanasignmall.com</label>
+          <label><input type="radio" name="orderChannel" value="smartstore">스마트스토어</label>
+          <label><input type="radio" name="orderChannel" value="gmarket">G마켓</label>
+          <label><input type="radio" name="orderChannel" value="auction">옥션</label>
+          <label><input type="radio" name="orderChannel" value="coupang">쿠팡</label>
+          <label><input type="radio" name="orderChannel" value="11st">11번가</label>
+          <label><input type="radio" name="orderChannel" value="phone">전화주문</label>
+        </div>
+      </div>
+      <div class="order-row">
+        <div class="order-label">주문자명</div>
+        <input class="phone-input" type="text" id="nameInput" placeholder="주문자명을 입력해주세요">
+      </div>
+      <div class="order-row">
+        <div class="order-label">연락처</div>
+        <input class="phone-input" type="tel" id="phoneInput" placeholder="010-0000-0000">
+      </div>
+
+      <button class="btn-submit" id="btnSubmit">저장하고 발송하기</button>
+      <div class="warning-text">발송 후에는 수정이 어렵사오니 반드시 심사숙고해주셔서 발송 바랍니다.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const IMG_BASE = 'https://ad.hanasm.kr/gsfiles_room/';
+const DESIGN_IMAGES = {
+  "des01": IMG_BASE + "/2026/04/02/97635dc3a9299a50b74d4ae1b572a3bfe6466a9a.png",
+  "des02": IMG_BASE + "/2026/04/03/33bacd2a6cdf5442e484137f72b722c3a35c2fd6.png",
+  "des03": IMG_BASE + "/2026/04/02/7c2cf70fd002267ba2b45a9b09528462b730e342.png",
+  "des04": IMG_BASE + "/2026/04/02/a1cc3eb80313170e09aa0d3c9eb13ae6912917b9.png",
+  "des05": IMG_BASE + "/2026/04/02/95e90a4d0260c82d551e181374dd1134444a7f2b.png",
+  "des06": IMG_BASE + "/2026/04/02/ba7e9e0c2a7ee4ed1aeb585ebe5bd4777dc8bb67.png"
+};
+
+const DESIGNS = [
+  { id:'des01', name:'01', src: DESIGN_IMAGES['des01'], defaultFontSize:22, defaultColor:'#1a1a1a' },
+  { id:'des02', name:'02', src: DESIGN_IMAGES['des02'], defaultFontSize:22, defaultColor:'#1a1a1a' },
+  { id:'des03', name:'03', src: DESIGN_IMAGES['des03'], defaultFontSize:22, defaultColor:'#1a1a1a' },
+  { id:'des04', name:'04', src: DESIGN_IMAGES['des04'], defaultFontSize:22, defaultColor:'#1a1a1a' },
+  { id:'des05', name:'05', src: DESIGN_IMAGES['des05'], defaultFontSize:22, defaultColor:'#1a1a1a' },
+  { id:'des06', name:'06', src: DESIGN_IMAGES['des06'], defaultFontSize:22, defaultColor:'#1a1a1a' },
+];
+
+const STRETCH_PX = 40;
+const BOTTOM_PAD_PX = 30;
+
+const COLORS = [
+  {n:'검정',v:'#1a1a1a'},{n:'흰색',v:'#ffffff'},{n:'빨강',v:'#CC0000'},{n:'파랑',v:'#003399'},
+  {n:'노랑',v:'#FFD700'},{n:'초록',v:'#006633'},{n:'주황',v:'#FF6600'},{n:'갈색',v:'#663300'},
+];
+
+let selectedDesign = DESIGNS[1];
+let currentColor = '#1a1a1a';
+let textBgColor = '#ffffff';
+let eyedropperMode = false;
+let loadedImages = {};
+
+// 프리로드
+function preloadImages() {
+  return Promise.all(DESIGNS.map(d => new Promise(r => {
+    const img = new Image();
+    
+    img.onload = () => { loadedImages[d.id] = img; r(); };
+    img.onerror = () => r();
+    img.src = d.src;
+  })));
+}
+
+// 핵심 렌더링
+function renderDesign(canvas, des, mainText, fontFamily, fontSize, fontWeight, textColor, posYOff, posXOff, bgOn, bgColor, bgPad) {
+  const img = loadedImages[des.id];
+  if (!img) return;
+
+  const iw = img.naturalWidth;
+  const ih = img.naturalHeight;
+
+  // 마지막 불투명 행 (모든 시안 공통: 940)
+  const lastOpaqueY = 940;
+  const stretchH = Math.round(ih * (STRETCH_PX / 1000));
+  const bottomPad = Math.round(ih * (BOTTOM_PAD_PX / 1000));
+  const cropH = lastOpaqueY + 1;
+  const totalH = cropH + stretchH + bottomPad;
+
+  canvas.width = iw;
+  canvas.height = totalH;
+  const ctx = canvas.getContext('2d');
+
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, iw, totalH);
+
+  ctx.drawImage(img, 0, 0, iw, cropH, 0, 0, iw, cropH);
+
+  // 마지막 불투명 행 1px을 반복 복사
+  for (let y = 0; y < stretchH; y++) {
+    ctx.drawImage(img, 0, lastOpaqueY, iw, 1, 0, cropH + y, iw, 1);
+  }
+
+  const hasText = mainText && mainText.trim();
+  const off = posYOff || 0;
+  const textCenterY = cropH + stretchH * 0.5;
+
+  if (!hasText) {
+    ctx.fillStyle = 'rgba(0,0,0,0.25)';
+    ctx.font = `500 ${Math.round(stretchH * 0.45)}px "Noto Sans KR",sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('상호/기관명', iw*0.5, textCenterY);
+  } else {
+    const scaledFS = Math.round(fontSize * (iw / 1000));
+    const textY = textCenterY + off;
+    const xOff = Math.round((posXOff || 0) * (iw / 1000));
+    const textX = iw * 0.5 + xOff;
+    ctx.font = `${fontWeight||700} ${scaledFS}px "${fontFamily||'Noto Sans KR'}",sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    // 글자 배경 박스
+    if (bgOn && bgColor) {
+      const metrics = ctx.measureText(mainText);
+      const scaledPad = Math.round((bgPad || 8) * (iw / 1000));
+      const tw = Math.min(metrics.width, iw * 0.85);
+      const th = scaledFS;
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(textX - tw/2 - scaledPad, textY - th/2 - scaledPad, tw + scaledPad*2, th + scaledPad*2);
+    }
+
+    ctx.fillStyle = textColor || des.defaultColor;
+    ctx.fillText(mainText, textX, textY, iw*0.85);
+  }
+}
+
+// 시안 바 초기화
+function initDesignBar() {
+  const bar = document.getElementById('designBar');
+  DESIGNS.forEach(d => {
+    const thumb = document.createElement('div');
+    thumb.className = 'design-thumb' + (d.id === selectedDesign.id ? ' selected' : '');
+    thumb.dataset.id = d.id;
+    thumb.innerHTML = `<img src="${DESIGN_IMAGES[d.id]}"><div class="label">${d.name}</div>`;
+    thumb.addEventListener('click', () => {
+      selectedDesign = d;
+      currentColor = d.defaultColor;
+      document.querySelectorAll('.design-thumb').forEach(el => el.classList.toggle('selected', el.dataset.id === d.id));
+      document.querySelectorAll('.color-chip').forEach(e => e.classList.toggle('sel', e.dataset.c === currentColor));
+      updateEditor();
+    });
+    bar.appendChild(thumb);
+  });
+}
+
+// 색상 초기화
+function initColorRow() {
+  const row = document.getElementById('colorRow');
+  COLORS.forEach(c => {
+    const chip = document.createElement('div');
+    chip.className = 'color-chip' + (c.v === currentColor ? ' sel' : '');
+    chip.style.background = c.v;
+    if (c.v === '#ffffff') chip.style.borderColor = '#bbb';
+    chip.title = c.n; chip.dataset.c = c.v;
+    chip.addEventListener('click', () => {
+      currentColor = c.v;
+      document.querySelectorAll('#colorRow .color-chip').forEach(e => e.classList.toggle('sel', e.dataset.c === c.v));
+      updateEditor();
+    });
+    row.appendChild(chip);
+  });
+
+  // 배경 색상 팔레트
+  const bgRow = document.getElementById('bgColorRow');
+  const BG_COLORS = [
+    {n:'흰색',v:'#ffffff'},{n:'검정',v:'#1a1a1a'},{n:'빨강',v:'#CC0000'},{n:'파랑',v:'#003399'},
+    {n:'노랑',v:'#FFD700'},{n:'초록',v:'#006633'},{n:'주황',v:'#FF6600'},{n:'연회색',v:'#eeeeee'},
+  ];
+  BG_COLORS.forEach(c => {
+    const chip = document.createElement('div');
+    chip.className = 'color-chip' + (c.v === textBgColor ? ' sel' : '');
+    chip.style.background = c.v;
+    if (c.v === '#ffffff') chip.style.borderColor = '#bbb';
+    chip.title = c.n; chip.dataset.c = c.v;
+    chip.addEventListener('click', () => {
+      textBgColor = c.v;
+      document.querySelectorAll('#bgColorRow .color-chip').forEach(e => e.classList.toggle('sel', e.dataset.c === c.v));
+      updateEditor();
+    });
+    bgRow.appendChild(chip);
+  });
+}
+
+// 스포이드
+function initEyedropper() {
+  const canvas = document.getElementById('editorCanvas');
+  const btn = document.getElementById('btnEyedropper');
+  const status = document.getElementById('eyedropperStatus');
+
+  btn.addEventListener('click', () => {
+    // EyeDropper API 지원 시 사용
+    if (window.EyeDropper) {
+      const dropper = new EyeDropper();
+      status.textContent = '색상을 선택하세요...';
+      dropper.open().then(result => {
+        textBgColor = result.sRGBHex;
+        document.querySelectorAll('#bgColorRow .color-chip').forEach(e => e.classList.remove('sel'));
+        status.textContent = textBgColor;
+        updateEditor();
+      }).catch(() => {
+        status.textContent = '';
+      });
+      return;
+    }
+
+    // EyeDropper API 미지원 시 안내
+    status.textContent = '이 브라우저에서는 스포이드를 지원하지 않습니다';
+    setTimeout(() => { status.textContent = ''; }, 2000);
+  });
+}
+
+function getParams() {
+  return {
+    main: document.getElementById('inputText').value,
+    ff: document.getElementById('fontFamily').value,
+    fs: parseInt(document.getElementById('fontSize').value),
+    fw: document.getElementById('fontWeight').value,
+    py: parseInt(document.getElementById('posY').value),
+    px: parseInt(document.getElementById('posX').value),
+    bgOn: document.getElementById('textBgOn').checked,
+    bgPad: parseInt(document.getElementById('bgPadding').value),
+  };
+}
+
+function updateEditor() {
+  if (!selectedDesign) return;
+  const p = getParams();
+  renderDesign(document.getElementById('editorCanvas'), selectedDesign, p.main, p.ff, p.fs, p.fw, currentColor, p.py, p.px, p.bgOn, textBgColor, p.bgPad);
+}
+
+function downloadDesign() {
+  const p = getParams();
+  if (!p.main.trim()) { alert('상호/기관명을 입력해주세요.'); return; }
+  const canvas = document.getElementById('editorCanvas');
+  const a = document.createElement('a');
+  a.download = `시안_${selectedDesign.name}_${p.main}_${Date.now()}.png`;
+  a.href = canvas.toDataURL('image/png');
+  a.click();
+}
+
+function resetEditor() {
+  document.getElementById('inputText').value = '';
+  document.getElementById('fontSize').value = selectedDesign.defaultFontSize;
+  document.getElementById('fontSizeLabel').textContent = selectedDesign.defaultFontSize + 'px';
+  document.getElementById('posY').value = 0;
+  document.getElementById('posYLabel').textContent = '0';
+  document.getElementById('posX').value = 0;
+  document.getElementById('posXLabel').textContent = '0';
+  document.getElementById('fontWeight').value = '700';
+  document.getElementById('fontFamily').value = 'Noto Sans KR';
+  document.getElementById('textBgOn').checked = false;
+  document.getElementById('textBgOptions').style.display = 'none';
+  currentColor = selectedDesign.defaultColor;
+  document.querySelectorAll('.color-chip').forEach(e => e.classList.toggle('sel', e.dataset.c === currentColor));
+  updateEditor();
+}
+
+function submitOrder() {
+  const p = getParams();
+  if (!p.main.trim()) { alert('상호/기관명을 입력해주세요.'); document.getElementById('inputText').focus(); return; }
+
+  const orderName = document.getElementById('nameInput').value.trim();
+  if (!orderName) { alert('주문자명을 입력해주세요.'); document.getElementById('nameInput').focus(); return; }
+
+  const phone = document.getElementById('phoneInput').value.trim();
+  if (!phone) { alert('연락처를 입력해주세요.'); document.getElementById('phoneInput').focus(); return; }
+
+  const channel = document.querySelector('input[name="orderChannel"]:checked').value;
+  const canvas = document.getElementById('editorCanvas');
+  const imgData = canvas.toDataURL('image/png');
+
+  // TODO: 서버 발송 연동
+  console.log('[발송 데이터]', {
+    design: selectedDesign.name,
+    text: p.main,
+    font: p.ff,
+    fontSize: p.fs,
+    fontWeight: p.fw,
+    color: currentColor,
+    channel: channel,
+    orderName: orderName,
+    phone: phone,
+    imageSize: Math.round(imgData.length / 1024) + 'KB'
+  });
+
+  alert(`발송 완료!\n\n시안: ${selectedDesign.name}\n상호명: ${p.main}\n주문자: ${orderName}\n주문처: ${channel}\n연락처: ${phone}`);
+}
+
+// 이벤트
+document.addEventListener('DOMContentLoaded', async () => {
+  await preloadImages();
+  initDesignBar();
+  initColorRow();
+  initEyedropper();
+
+  // 배경 토글
+  document.getElementById('textBgOn').addEventListener('change', (e) => {
+    document.getElementById('textBgOptions').style.display = e.target.checked ? 'block' : 'none';
+    updateEditor();
+  });
+  document.getElementById('bgPadding').addEventListener('input', e => {
+    document.getElementById('bgPaddingLabel').textContent = e.target.value + 'px';
+    updateEditor();
+  });
+
+  document.getElementById('btnDownload').addEventListener('click', downloadDesign);
+  document.getElementById('btnReset').addEventListener('click', resetEditor);
+  document.getElementById('btnSubmit').addEventListener('click', submitOrder);
+
+  document.getElementById('inputText').addEventListener('input', updateEditor);
+  ['fontFamily','fontWeight'].forEach(id => document.getElementById(id).addEventListener('change', updateEditor));
+  document.getElementById('fontSize').addEventListener('input', e => { document.getElementById('fontSizeLabel').textContent = e.target.value+'px'; updateEditor(); });
+  document.getElementById('posY').addEventListener('input', e => { document.getElementById('posYLabel').textContent = e.target.value; updateEditor(); });
+  document.getElementById('posX').addEventListener('input', e => { document.getElementById('posXLabel').textContent = e.target.value; updateEditor(); });
+
+  updateEditor();
+  setTimeout(() => document.getElementById('inputText').focus(), 200);
+});
+</script>
+</body>
+</html>
