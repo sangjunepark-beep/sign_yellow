@@ -3,27 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ì°¨ë 2ë¶ì  Aí ìê°í ë¸ë - ìí¸ëª ìë ¥</title>
+<title>차량 2부제 A형 입간판 노랑 - 상호명 입력</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#0f1729;color:#e2e8f0;font-size:14px;min-height:100vh}
 
-/* âââ ë°ì¤í¬í±: 2ì»¬ë¼ âââ */
+/* ─── 데스크톱: 2컬럼 ─── */
 .app-layout{display:flex;height:100vh;overflow:hidden}
 
-/* ì¼ìª½: ìì ë¯¸ë¦¬ë³´ê¸° */
+/* 왼쪽: 시안 미리보기 */
 .preview-panel{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#0f1729;padding:32px;position:relative;min-width:0}
 .preview-panel canvas{width:100%;max-width:520px;border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,0.4)}
 
-/* ì¤ë¥¸ìª½: ì»¨í¸ë¡¤ í¨ë */
+/* 오른쪽: 컨트롤 패널 */
 .control-panel{width:420px;flex-shrink:0;background:#1a2332;border-left:1px solid #2a3544;overflow-y:auto;display:flex;flex-direction:column}
 
-/* ì¹ì ê³µíµ */
+/* 섹션 공통 */
 .section{padding:20px 24px}
 .section-title{font-size:11px;font-weight:700;letter-spacing:1.5px;color:#64748b;text-transform:uppercase;margin-bottom:14px}
 
-/* 1. ìì ì í */
+/* 1. 시안 선택 */
 .design-grid{display:flex;gap:8px;flex-wrap:wrap}
 .design-thumb{width:64px;height:64px;border:2px solid #2a3544;border-radius:10px;overflow:hidden;cursor:pointer;transition:all 0.15s;position:relative}
 .design-thumb:hover{border-color:#475569}
@@ -35,24 +35,24 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#0f1729;co
 .design-thumb.selected .check-badge{display:flex}
 .design-bar.single-mode .design-thumb{width:80px;height:80px;cursor:default;border-color:#6366f1}
 
-/* êµ¬ë¶ì  */
+/* 구분선 */
 .sep{height:1px;background:#2a3544;margin:0}
 
-/* 2. ìë ¥ & ì¤íì¼ */
+/* 2. 입력 & 스타일 */
 .ctrl-group{margin-bottom:18px}
 .ctrl-group label{display:block;font-size:12px;font-weight:700;color:#94a3b8;margin-bottom:8px;letter-spacing:0.5px}
 .ctrl-input{width:100%;padding:12px 16px;border:1px solid #2a3544;border-radius:10px;font-size:15px;font-family:inherit;background:#0f1729;color:#e2e8f0;text-align:left}
 .ctrl-input::placeholder{color:#475569}
 .ctrl-input:focus{outline:none;border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,0.15)}
 
-/* ìì ì¹© (ìí) */
+/* 색상 칩 (원형) */
 .color-row{display:flex;gap:10px;flex-wrap:wrap}
 .color-chip{width:34px;height:34px;border-radius:50%;border:2px solid #2a3544;cursor:pointer;transition:all 0.12s;position:relative}
 .color-chip:hover{transform:scale(1.12)}
 .color-chip.sel{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,0.35)}
 .color-chip.sel::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;border:2px solid #fff;opacity:0.8}
 
-/* 3. ì£¼ë¬¸ ì ë³´ */
+/* 3. 주문 정보 */
 .auto-match-info{background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.3);border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:13px;color:#a5b4fc;line-height:1.6;display:flex;align-items:center;gap:10px}
 .auto-match-info .match-icon{width:28px;height:28px;background:#6366f1;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .auto-match-info .match-icon svg{width:14px;height:14px;fill:#fff}
@@ -65,25 +65,25 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#0f1729;co
 .order-input:focus{outline:none;border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,0.15)}
 .order-input:disabled{background:#1e293b;color:#64748b;cursor:not-allowed}
 
-/* ì£¼ë¬¸ì² í ë²í¼ */
+/* 주문처 필 버튼 */
 .channel-pills{display:flex;flex-wrap:wrap;gap:6px}
 .channel-pill{padding:7px 14px;border:1px solid #2a3544;border-radius:20px;font-size:12px;font-weight:500;color:#94a3b8;cursor:pointer;transition:all 0.12s;background:transparent}
 .channel-pill:hover{border-color:#475569;color:#e2e8f0}
 .channel-pill.active{background:#6366f1;border-color:#6366f1;color:#fff}
 .channel-pill input{display:none}
 
-/* ì£¼ë¬¸ì½ë ë° */
+/* 주문코드 바 */
 .order-code-bar{background:rgba(99,102,241,0.08);border-bottom:1px solid #2a3544;padding:10px 24px;font-size:12px;color:#a5b4fc;display:none;text-align:center}
 .order-code-bar span{font-weight:700;color:#c7d2fe}
 
-/* ë°ì¡ ë²í¼ */
+/* 발송 버튼 */
 .btn-submit{width:100%;padding:16px;background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 100%);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:900;cursor:pointer;font-family:inherit;margin-top:8px;transition:all 0.2s;letter-spacing:0.3px}
 .btn-submit:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 4px 16px rgba(99,102,241,0.4)}
 .btn-submit:active{transform:translateY(0)}
 .btn-submit:disabled{opacity:0.5;cursor:not-allowed;transform:none;box-shadow:none}
 .warning-text{text-align:center;margin-top:10px;font-size:11px;color:#64748b;font-weight:400;line-height:1.5}
 
-/* ìë£ íë©´ */
+/* 완료 화면 */
 .complete-screen{display:none;text-align:center;padding:60px 24px;flex:1;justify-content:center;align-items:center;flex-direction:column}
 .complete-screen.show{display:flex}
 .complete-screen .check-icon{font-size:56px;margin-bottom:16px}
@@ -91,15 +91,15 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#0f1729;co
 .complete-screen p{font-size:14px;color:#94a3b8;line-height:1.7;margin-bottom:6px}
 .complete-screen strong{color:#c7d2fe}
 
-/* âââ ëª¨ë°ì¼ âââ */
+/* ─── 모바일 ─── */
 @media(max-width:860px){
   .app-layout{flex-direction:column;height:auto;min-height:100vh}
 
-  /* ìë¨: ìì ë¯¸ë¦¬ë³´ê¸° ê³ ì  */
+  /* 상단: 시안 미리보기 고정 */
   .preview-panel{position:sticky;top:0;z-index:100;padding:12px;height:auto;min-height:0;flex:none;background:#0f1729;border-bottom:1px solid #1e293b}
   .preview-panel canvas{max-width:100%;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.3)}
 
-  /* íë¨: ì»¨í¸ë¡¤ ì¤í¬ë¡¤ */
+  /* 하단: 컨트롤 스크롤 */
   .control-panel{width:100%;border-left:none;overflow-y:visible;flex:1}
   .section{padding:16px}
   .design-thumb{width:52px;height:52px}
@@ -108,7 +108,7 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#0f1729;co
   .ctrl-input{font-size:16px}
 }
 
-/* ìì£¼ ìì íë©´ */
+/* 아주 작은 화면 */
 @media(max-width:400px){
   .design-thumb{width:44px;height:44px}
   .channel-pills{gap:4px}
@@ -120,96 +120,96 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#0f1729;co
 
 <div class="app-layout" id="appLayout">
 
-  <!-- ì¼ìª½(ë°ì¤í¬í±) / ìë¨(ëª¨ë°ì¼): ìì ë¯¸ë¦¬ë³´ê¸° -->
+  <!-- 왼쪽(데스크톱) / 상단(모바일): 시안 미리보기 -->
   <div class="preview-panel" id="previewPanel">
     <canvas id="editorCanvas"></canvas>
   </div>
 
-  <!-- ì¤ë¥¸ìª½(ë°ì¤í¬í±) / íë¨(ëª¨ë°ì¼): ì»¨í¸ë¡¤ -->
+  <!-- 오른쪽(데스크톱) / 하단(모바일): 컨트롤 -->
   <div class="control-panel" id="controlPanel">
 
-    <!-- ì£¼ë¬¸ì½ë ë° -->
+    <!-- 주문코드 바 -->
     <div class="order-code-bar" id="orderCodeBar">
-      ì£¼ë¬¸ì½ë <span id="orderCodeDisplay"></span> ìëì°ê²°
+      주문코드 <span id="orderCodeDisplay"></span> 자동연결
     </div>
 
-    <!-- 1. ìì ì í -->
+    <!-- 1. 시안 선택 -->
     <div class="section" id="designSection">
-      <div class="section-title">1. ìì ì í</div>
+      <div class="section-title">1. 시안 선택</div>
       <div class="design-grid" id="designBar"></div>
     </div>
 
     <div class="sep"></div>
 
-    <!-- 2. ìë ¥ & ì¤íì¼ -->
+    <!-- 2. 입력 & 스타일 -->
     <div class="section">
-      <div class="section-title">2. íì¤í¸ ìë ¥</div>
+      <div class="section-title">2. 텍스트 입력</div>
       <div class="ctrl-group">
-        <label>ìí¸/ê¸°ê´ëª</label>
-        <input class="ctrl-input" type="text" id="inputText" placeholder="ì: ìê·¸ë ì¤íëì¤ ì¹´í" maxlength="20">
+        <label>상호/기관명</label>
+        <input class="ctrl-input" type="text" id="inputText" placeholder="예: 시그널 스튜디오 카페" maxlength="20">
       </div>
       <div class="ctrl-group">
-        <label>ê¸ì ìì</label>
+        <label>글자 색상</label>
         <div class="color-row" id="colorRow"></div>
       </div>
     </div>
 
     <div class="sep"></div>
 
-    <!-- 3. ì£¼ë¬¸ ì ë³´ -->
+    <!-- 3. 주문 정보 -->
     <div class="section" id="orderSection">
-      <div class="section-title">3. ì£¼ë¬¸ ì ë³´</div>
+      <div class="section-title">3. 주문 정보</div>
 
-      <!-- ìëë§¤ì¹­ ìë´ -->
+      <!-- 자동매칭 안내 -->
       <div class="auto-match-info" id="autoMatchInfo" style="display:none">
         <div class="match-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
-        <div><strong>ì£¼ë¬¸ ìëì°ê²°</strong><br>ì£¼ë¬¸ ì ë³´ê° ìëì¼ë¡ ë§¤ì¹­ëì´ ë³ë ìë ¥ì´ íì ììµëë¤.</div>
+        <div><strong>주문 자동연결</strong><br>주문 정보가 자동으로 매칭되어 별도 입력이 필요 없습니다.</div>
       </div>
 
-      <!-- ì£¼ë¬¸ì² -->
+      <!-- 주문처 -->
       <div class="order-row" id="channelRow">
-        <div class="row-label">ì£¼ë¬¸ ì±ë</div>
+        <div class="row-label">주문 채널</div>
         <div class="channel-pills" id="channelPills">
-          <label class="channel-pill active"><input type="radio" name="orderChannel" value="hanasignmall.kr" checked>íëì¬ì¸ëª°.kr</label>
-          <label class="channel-pill"><input type="radio" name="orderChannel" value="hanasignmall.com">íëì¬ì¸ëª°.com</label>
-          <label class="channel-pill"><input type="radio" name="orderChannel" value="smartstore">ì¤ë§í¸ì¤í ì´</label>
-          <label class="channel-pill"><input type="radio" name="orderChannel" value="gmarket">Gë§ì¼</label>
-          <label class="channel-pill"><input type="radio" name="orderChannel" value="auction">ì¥ì</label>
-          <label class="channel-pill"><input type="radio" name="orderChannel" value="coupang">ì¿ í¡</label>
-          <label class="channel-pill"><input type="radio" name="orderChannel" value="11st">11ë²ê°</label>
-          <label class="channel-pill"><input type="radio" name="orderChannel" value="phone">ì íì£¼ë¬¸</label>
+          <label class="channel-pill active"><input type="radio" name="orderChannel" value="hanasignmall.kr" checked>하나사인몰.kr</label>
+          <label class="channel-pill"><input type="radio" name="orderChannel" value="hanasignmall.com">하나사인몰.com</label>
+          <label class="channel-pill"><input type="radio" name="orderChannel" value="smartstore">스마트스토어</label>
+          <label class="channel-pill"><input type="radio" name="orderChannel" value="gmarket">G마켓</label>
+          <label class="channel-pill"><input type="radio" name="orderChannel" value="auction">옥션</label>
+          <label class="channel-pill"><input type="radio" name="orderChannel" value="coupang">쿠팡</label>
+          <label class="channel-pill"><input type="radio" name="orderChannel" value="11st">11번가</label>
+          <label class="channel-pill"><input type="radio" name="orderChannel" value="phone">전화주문</label>
         </div>
       </div>
 
-      <!-- ì£¼ë¬¸ì / ì°ë½ì² (2ì´) -->
+      <!-- 주문자 / 연락처 (2열) -->
       <div style="display:flex;gap:12px" id="namePhoneRow">
         <div class="order-row" id="nameRow" style="flex:1">
-          <div class="row-label">ì£¼ë¬¸ìëª</div>
-          <input class="order-input" type="text" id="nameInput" placeholder="íê¸¸ë">
+          <div class="row-label">주문자명</div>
+          <input class="order-input" type="text" id="nameInput" placeholder="홍길동">
         </div>
         <div class="order-row" id="phoneRow" style="flex:1">
-          <div class="row-label">ì°ë½ì²</div>
+          <div class="row-label">연락처</div>
           <input class="order-input" type="tel" id="phoneInput" placeholder="010-1234-5678">
         </div>
       </div>
 
-      <div class="warning-text">ì£¼ë¬¸ì ì ìíìëë¤. ë°ì¡ í ìì ì´ ì´ë µìµëë¤.</div>
-      <button class="btn-submit" id="btnSubmit">ìì íì  ë° ì£¼ë¬¸ ìë£ &rarr;</button>
+      <div class="warning-text">주문제작 상품입니다. 발송 후 수정이 어렵습니다.</div>
+      <button class="btn-submit" id="btnSubmit">시안 확정 및 주문 완료 &rarr;</button>
     </div>
 
-    <!-- ìë£ íë©´ -->
+    <!-- 완료 화면 -->
     <div class="complete-screen" id="completeScreen">
       <div class="check-icon">&#x2705;</div>
-      <h2>ìì ë°ì¡ ìë£</h2>
+      <h2>시안 발송 완료</h2>
       <p id="completeMsg"></p>
-      <p style="font-size:12px;color:#475569;margin-top:24px">ì´ íì´ì§ë¥¼ ë«ì¼ìë ë©ëë¤.</p>
+      <p style="font-size:12px;color:#475569;margin-top:24px">이 페이지를 닫으셔도 됩니다.</p>
     </div>
 
   </div>
 </div>
 
 <script>
-/* âââââ ì¤ì  âââââ */
+/* ───── 설정 ───── */
 const IMG_BASE = 'https://ad.hanasm.kr/gsfiles_room/';
 const DESIGN_IMAGES = {
   "des01": IMG_BASE + "/2026/04/02/97635dc3a9299a50b74d4ae1b572a3bfe6466a9a.png",
@@ -236,16 +236,16 @@ const STRETCH_PX = 40;
 const BOTTOM_PAD_PX = 30;
 
 const COLORS = [
-  {n:'ê²ì ',v:'#1a1a1a'},{n:'í°ì',v:'#ffffff'},{n:'ë¹¨ê°',v:'#CC0000'},{n:'íë',v:'#003399'},
-  {n:'ë¸ë',v:'#FFD700'},{n:'ì´ë¡',v:'#006633'},{n:'ì£¼í©',v:'#FF6600'},{n:'ê°ì',v:'#663300'},
+  {n:'검정',v:'#1a1a1a'},{n:'흰색',v:'#ffffff'},{n:'빨강',v:'#CC0000'},{n:'파랑',v:'#003399'},
+  {n:'노랑',v:'#FFD700'},{n:'초록',v:'#006633'},{n:'주황',v:'#FF6600'},{n:'갈색',v:'#663300'},
 ];
 
-/* âââââ ìí âââââ */
+/* ───── 상태 ───── */
 let selectedDesign = null;
 let currentColor = '#1a1a1a';
 let loadedImages = {};
 
-/* âââââ URL íë¼ë¯¸í° âââââ */
+/* ───── URL 파라미터 ───── */
 const urlParams = new URLSearchParams(window.location.search);
 const ORDER_CODE = urlParams.get('order_code') || '';
 const PARAM_DESIGN = urlParams.get('design') || '';
@@ -254,7 +254,7 @@ const PARAM_NAME = urlParams.get('name') || '';
 const PARAM_PHONE = urlParams.get('phone') || '';
 const IS_AUTO_MODE = !!ORDER_CODE;
 
-/* âââââ ì´ë¯¸ì§ íë¦¬ë¡ë âââââ */
+/* ───── 이미지 프리로드 ───── */
 function preloadImages(designList) {
   return Promise.all(designList.map(d => new Promise(r => {
     const img = new Image();
@@ -264,7 +264,7 @@ function preloadImages(designList) {
   })));
 }
 
-/* âââââ ìºë²ì¤ ë ëë§ âââââ */
+/* ───── 캔버스 렌더링 ───── */
 function renderDesign(canvas, des, mainText, textColor) {
   const img = loadedImages[des.id];
   if (!img) return;
@@ -297,7 +297,7 @@ function renderDesign(canvas, des, mainText, textColor) {
     ctx.font = `500 ${Math.round(stretchH * 0.45)}px "Noto Sans KR",sans-serif`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('ìí¸/ê¸°ê´ëª', iw * 0.5, textCenterY);
+    ctx.fillText('상호/기관명', iw * 0.5, textCenterY);
   } else {
     const scaledFS = Math.round(FIXED_FONT_SIZE * (iw / 1000));
     ctx.font = `${FIXED_FONT_WEIGHT} ${scaledFS}px "${FIXED_FONT}",sans-serif`;
@@ -308,7 +308,7 @@ function renderDesign(canvas, des, mainText, textColor) {
   }
 }
 
-/* âââââ ìì ë° ì´ê¸°í âââââ */
+/* ───── 시안 바 초기화 ───── */
 function initDesignBar(designList) {
   const bar = document.getElementById('designBar');
   bar.innerHTML = '';
@@ -336,7 +336,7 @@ function initDesignBar(designList) {
   });
 }
 
-/* âââââ ìì íë í¸ âââââ */
+/* ───── 색상 팔레트 ───── */
 function initColorRow() {
   const row = document.getElementById('colorRow');
   row.innerHTML = '';
@@ -356,7 +356,7 @@ function initColorRow() {
   });
 }
 
-/* âââââ ì±ë í ë²í¼ âââââ */
+/* ───── 채널 필 버튼 ───── */
 function initChannelPills() {
   document.querySelectorAll('.channel-pill').forEach(pill => {
     pill.addEventListener('click', () => {
@@ -367,18 +367,18 @@ function initChannelPills() {
   });
 }
 
-/* âââââ ìëí° ìë°ì´í¸ âââââ */
+/* ───── 에디터 업데이트 ───── */
 function updateEditor() {
   if (!selectedDesign) return;
   const text = document.getElementById('inputText').value;
   renderDesign(document.getElementById('editorCanvas'), selectedDesign, text, currentColor);
 }
 
-/* âââââ ë°ì¡ ì²ë¦¬ âââââ */
+/* ───── 발송 처리 ───── */
 function submitOrder() {
   const text = document.getElementById('inputText').value.trim();
   if (!text) {
-    alert('ìí¸/ê¸°ê´ëªì ìë ¥í´ì£¼ì¸ì.');
+    alert('상호/기관명을 입력해주세요.');
     document.getElementById('inputText').focus();
     return;
   }
@@ -386,19 +386,19 @@ function submitOrder() {
   let orderName, phone, channel;
 
   if (IS_AUTO_MODE) {
-    orderName = PARAM_NAME || '(ìëë§¤ì¹­)';
-    phone = PARAM_PHONE || '(ìëë§¤ì¹­)';
-    channel = PARAM_CHANNEL || '(ìëë§¤ì¹­)';
+    orderName = PARAM_NAME || '(자동매칭)';
+    phone = PARAM_PHONE || '(자동매칭)';
+    channel = PARAM_CHANNEL || '(자동매칭)';
   } else {
     orderName = document.getElementById('nameInput').value.trim();
     if (!orderName) {
-      alert('ì£¼ë¬¸ìëªì ìë ¥í´ì£¼ì¸ì.');
+      alert('주문자명을 입력해주세요.');
       document.getElementById('nameInput').focus();
       return;
     }
     phone = document.getElementById('phoneInput').value.trim();
     if (!phone) {
-      alert('ì°ë½ì²ë¥¼ ìë ¥í´ì£¼ì¸ì.');
+      alert('연락처를 입력해주세요.');
       document.getElementById('phoneInput').focus();
       return;
     }
@@ -421,22 +421,22 @@ function submitOrder() {
     timestamp: new Date().toISOString()
   };
 
-  // TODO: ìë² ë°ì¡ ì°ë
-  console.log('[ë°ì¡ ë°ì´í°]', payload);
+  // TODO: 서버 발송 연동
+  console.log('[발송 데이터]', payload);
 
-  // ìë£ íë©´ íì
+  // 완료 화면 표시
   document.querySelectorAll('#designSection, #orderSection, .sep').forEach(el => el.style.display = 'none');
   document.getElementById('orderCodeBar').style.display = 'none';
   const complete = document.getElementById('completeScreen');
   complete.classList.add('show');
   document.getElementById('completeMsg').innerHTML =
-    `ìì <strong>${selectedDesign.name}</strong>ë² / ìí¸ëª <strong>${text}</strong><br>` +
-    (IS_AUTO_MODE ? `ì£¼ë¬¸ì½ë <strong>${ORDER_CODE}</strong>ë¡ ìë ì°ê²°ëììµëë¤.` : `ì£¼ë¬¸ì <strong>${orderName}</strong> / ì°ë½ì² <strong>${phone}</strong>`);
+    `시안 <strong>${selectedDesign.name}</strong>번 / 상호명 <strong>${text}</strong><br>` +
+    (IS_AUTO_MODE ? `주문코드 <strong>${ORDER_CODE}</strong>로 자동 연결되었습니다.` : `주문자 <strong>${orderName}</strong> / 연락처 <strong>${phone}</strong>`);
 
-  alert('ììì´ ë°ì¡ëììµëë¤.');
+  alert('시안이 발송되었습니다.');
 }
 
-/* âââââ ìëë§¤ì¹­ ëª¨ë âââââ */
+/* ───── 자동매칭 모드 ───── */
 function setupAutoMode() {
   if (!IS_AUTO_MODE) return;
 
@@ -473,7 +473,7 @@ function setupAutoMode() {
   }
 }
 
-/* âââââ ì´ê¸°í âââââ */
+/* ───── 초기화 ───── */
 document.addEventListener('DOMContentLoaded', async () => {
   let activeDesigns = DESIGNS;
   if (PARAM_DESIGN) {
