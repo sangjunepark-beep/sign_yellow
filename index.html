@@ -3,191 +3,213 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>차량 2부제 A형 입간판 노랑 - 상호명 입력</title>
+<title>ì°¨ë 2ë¶ì  Aí ìê°í ë¸ë - ìí¸ëª ìë ¥</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f7f8fa;color:#333;font-size:14px}
+body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#0f1729;color:#e2e8f0;font-size:14px;min-height:100vh}
 
-/* 헤더 */
-.page-header{background:#fff;border-bottom:1px solid #e0e0e0;padding:20px 0 16px;text-align:center}
-.page-header h1{font-size:20px;font-weight:900;color:#1a1a1a;margin-bottom:4px}
-.page-header p{font-size:13px;color:#666;font-weight:400}
-.order-info-bar{background:#eef6ff;border-bottom:1px solid #bdd6f0;padding:10px 20px;text-align:center;font-size:13px;color:#1a365d;font-weight:500;display:none}
-.order-info-bar span{font-weight:700;color:#2563eb}
+/* âââ ë°ì¤í¬í±: 2ì»¬ë¼ âââ */
+.app-layout{display:flex;height:100vh;overflow:hidden}
 
-/* 시안 선택 바 */
-.design-bar{background:#fff;border-bottom:1px solid #eee;padding:16px 0}
-.design-bar-inner{max-width:900px;margin:0 auto;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:0 16px}
-.design-thumb{width:80px;height:80px;border:2px solid #e0e0e0;border-radius:8px;overflow:hidden;cursor:pointer;transition:all 0.15s;position:relative}
-.design-thumb:hover{border-color:#888}
-.design-thumb.selected{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,0.2)}
+/* ì¼ìª½: ìì ë¯¸ë¦¬ë³´ê¸° */
+.preview-panel{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#0f1729;padding:32px;position:relative;min-width:0}
+.preview-panel canvas{width:100%;max-width:520px;border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,0.4)}
+
+/* ì¤ë¥¸ìª½: ì»¨í¸ë¡¤ í¨ë */
+.control-panel{width:420px;flex-shrink:0;background:#1a2332;border-left:1px solid #2a3544;overflow-y:auto;display:flex;flex-direction:column}
+
+/* ì¹ì ê³µíµ */
+.section{padding:20px 24px}
+.section-title{font-size:11px;font-weight:700;letter-spacing:1.5px;color:#64748b;text-transform:uppercase;margin-bottom:14px}
+
+/* 1. ìì ì í */
+.design-grid{display:flex;gap:8px;flex-wrap:wrap}
+.design-thumb{width:64px;height:64px;border:2px solid #2a3544;border-radius:10px;overflow:hidden;cursor:pointer;transition:all 0.15s;position:relative}
+.design-thumb:hover{border-color:#475569}
+.design-thumb.selected{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,0.3)}
 .design-thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.design-thumb .label{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.55);color:#fff;font-size:11px;text-align:center;padding:2px 0;font-weight:700}
-.design-bar.single-mode .design-bar-inner{justify-content:center}
-.design-bar.single-mode .design-thumb{width:100px;height:100px;cursor:default;border-color:#2563eb}
+.design-thumb .label{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.6);color:#fff;font-size:10px;text-align:center;padding:2px 0;font-weight:700}
+.design-thumb .check-badge{position:absolute;top:4px;right:4px;width:18px;height:18px;background:#6366f1;border-radius:50%;display:none;align-items:center;justify-content:center}
+.design-thumb .check-badge svg{width:10px;height:10px;fill:#fff}
+.design-thumb.selected .check-badge{display:flex}
+.design-bar.single-mode .design-thumb{width:80px;height:80px;cursor:default;border-color:#6366f1}
 
-/* 메인 영역 */
-.main-area{max-width:600px;margin:0 auto;padding:0 16px 24px}
-.editor-card{background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.06);overflow:hidden;margin-top:16px}
+/* êµ¬ë¶ì  */
+.sep{height:1px;background:#2a3544;margin:0}
 
-/* 캔버스 영역 */
-.canvas-section{padding:20px 20px 12px;text-align:center}
-.canvas-section canvas{width:100%;max-width:460px;border:1px solid #e0e0e0;border-radius:6px;background:#fafafa}
+/* 2. ìë ¥ & ì¤íì¼ */
+.ctrl-group{margin-bottom:18px}
+.ctrl-group label{display:block;font-size:12px;font-weight:700;color:#94a3b8;margin-bottom:8px;letter-spacing:0.5px}
+.ctrl-input{width:100%;padding:12px 16px;border:1px solid #2a3544;border-radius:10px;font-size:15px;font-family:inherit;background:#0f1729;color:#e2e8f0;text-align:left}
+.ctrl-input::placeholder{color:#475569}
+.ctrl-input:focus{outline:none;border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,0.15)}
 
-/* 입력 섹션 */
-.input-section{padding:0 20px 20px}
-.ctrl-group{margin-bottom:16px}
-.ctrl-group label{display:block;font-size:13px;font-weight:700;color:#333;margin-bottom:6px}
-.ctrl-input{width:100%;padding:12px 14px;border:1px solid #d1d5db;border-radius:8px;font-size:16px;font-family:inherit;text-align:center}
-.ctrl-input:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,0.1)}
-
-/* 색상 선택 */
-.color-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
-.color-chip{width:36px;height:36px;border-radius:6px;border:2px solid #ddd;cursor:pointer;transition:all 0.12s}
+/* ìì ì¹© (ìí) */
+.color-row{display:flex;gap:10px;flex-wrap:wrap}
+.color-chip{width:34px;height:34px;border-radius:50%;border:2px solid #2a3544;cursor:pointer;transition:all 0.12s;position:relative}
 .color-chip:hover{transform:scale(1.12)}
-.color-chip.sel{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,0.3)}
+.color-chip.sel{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,0.35)}
+.color-chip.sel::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;border:2px solid #fff;opacity:0.8}
 
-/* 구분선 */
-.divider{height:1px;background:#e5e7eb;margin:0}
+/* 3. ì£¼ë¬¸ ì ë³´ */
+.auto-match-info{background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.3);border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:13px;color:#a5b4fc;line-height:1.6;display:flex;align-items:center;gap:10px}
+.auto-match-info .match-icon{width:28px;height:28px;background:#6366f1;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.auto-match-info .match-icon svg{width:14px;height:14px;fill:#fff}
+.auto-match-info strong{color:#c7d2fe}
 
-/* 하단 주문 섹션 */
-.order-section{padding:20px}
 .order-row{margin-bottom:14px}
-.order-row label.row-label{display:block;font-size:13px;font-weight:700;color:#555;margin-bottom:6px}
-.order-input{width:100%;padding:11px 14px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;font-family:inherit}
-.order-input:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,0.1)}
-.order-input:disabled{background:#f3f4f6;color:#9ca3af;cursor:not-allowed}
+.order-row .row-label{display:block;font-size:11px;font-weight:700;color:#64748b;margin-bottom:6px;letter-spacing:0.5px;text-transform:uppercase}
+.order-input{width:100%;padding:10px 14px;border:1px solid #2a3544;border-radius:10px;font-size:14px;font-family:inherit;background:#0f1729;color:#e2e8f0}
+.order-input::placeholder{color:#475569}
+.order-input:focus{outline:none;border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,0.15)}
+.order-input:disabled{background:#1e293b;color:#64748b;cursor:not-allowed}
 
-/* 주문처 라디오 */
-.radio-group{display:flex;flex-wrap:wrap;gap:6px 12px}
-.radio-group label{display:flex;align-items:center;gap:4px;font-size:13px;cursor:pointer;padding:4px 0}
-.radio-group input[type="radio"]{accent-color:#2563eb;width:16px;height:16px}
+/* ì£¼ë¬¸ì² í ë²í¼ */
+.channel-pills{display:flex;flex-wrap:wrap;gap:6px}
+.channel-pill{padding:7px 14px;border:1px solid #2a3544;border-radius:20px;font-size:12px;font-weight:500;color:#94a3b8;cursor:pointer;transition:all 0.12s;background:transparent}
+.channel-pill:hover{border-color:#475569;color:#e2e8f0}
+.channel-pill.active{background:#6366f1;border-color:#6366f1;color:#fff}
+.channel-pill input{display:none}
 
-/* 자동매칭 안내 */
-.auto-match-info{background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:13px;color:#166534;line-height:1.6}
-.auto-match-info strong{color:#15803d}
+/* ì£¼ë¬¸ì½ë ë° */
+.order-code-bar{background:rgba(99,102,241,0.08);border-bottom:1px solid #2a3544;padding:10px 24px;font-size:12px;color:#a5b4fc;display:none;text-align:center}
+.order-code-bar span{font-weight:700;color:#c7d2fe}
 
-/* 버튼 */
-.btn-submit{width:100%;padding:16px;background:#2563eb;color:#fff;border:none;border-radius:8px;font-size:17px;font-weight:900;cursor:pointer;font-family:inherit;margin-top:8px;transition:background 0.15s}
-.btn-submit:hover{background:#1d4ed8}
-.btn-submit:disabled{background:#93c5fd;cursor:not-allowed}
+/* ë°ì¡ ë²í¼ */
+.btn-submit{width:100%;padding:16px;background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 100%);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:900;cursor:pointer;font-family:inherit;margin-top:8px;transition:all 0.2s;letter-spacing:0.3px}
+.btn-submit:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 4px 16px rgba(99,102,241,0.4)}
+.btn-submit:active{transform:translateY(0)}
+.btn-submit:disabled{opacity:0.5;cursor:not-allowed;transform:none;box-shadow:none}
+.warning-text{text-align:center;margin-top:10px;font-size:11px;color:#64748b;font-weight:400;line-height:1.5}
 
-/* 경고문 */
-.warning-text{text-align:center;margin-top:12px;padding:10px;font-size:12px;color:#b91c1c;font-weight:500;line-height:1.6}
+/* ìë£ íë©´ */
+.complete-screen{display:none;text-align:center;padding:60px 24px;flex:1;justify-content:center;align-items:center;flex-direction:column}
+.complete-screen.show{display:flex}
+.complete-screen .check-icon{font-size:56px;margin-bottom:16px}
+.complete-screen h2{font-size:22px;font-weight:900;color:#6366f1;margin-bottom:10px}
+.complete-screen p{font-size:14px;color:#94a3b8;line-height:1.7;margin-bottom:6px}
+.complete-screen strong{color:#c7d2fe}
 
-/* 완료 화면 */
-.complete-screen{display:none;text-align:center;padding:40px 20px}
-.complete-screen .check-icon{font-size:64px;margin-bottom:16px}
-.complete-screen h2{font-size:22px;font-weight:900;color:#059669;margin-bottom:8px}
-.complete-screen p{font-size:14px;color:#666;line-height:1.7;margin-bottom:6px}
+/* âââ ëª¨ë°ì¼ âââ */
+@media(max-width:860px){
+  .app-layout{flex-direction:column;height:auto;min-height:100vh}
 
-/* 모바일 최적화 */
-@media(max-width:768px){
-  .page-header{padding:16px 0 12px;position:sticky;top:0;z-index:100;background:#fff}
-  .design-bar{position:sticky;top:56px;z-index:99;background:#fff}
-  .order-info-bar{position:sticky;top:56px;z-index:98}
-  .design-bar + .order-info-bar{top:113px}
-  .canvas-section{padding:12px 12px 8px}
-  .input-section{padding:0 12px 16px}
-  .order-section{padding:16px 12px}
-  .design-thumb{width:64px;height:64px}
+  /* ìë¨: ìì ë¯¸ë¦¬ë³´ê¸° ê³ ì  */
+  .preview-panel{position:sticky;top:0;z-index:100;padding:12px;height:auto;min-height:0;flex:none;background:#0f1729;border-bottom:1px solid #1e293b}
+  .preview-panel canvas{max-width:100%;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.3)}
+
+  /* íë¨: ì»¨í¸ë¡¤ ì¤í¬ë¡¤ */
+  .control-panel{width:100%;border-left:none;overflow-y:visible;flex:1}
+  .section{padding:16px}
+  .design-thumb{width:52px;height:52px}
+  .design-bar.single-mode .design-thumb{width:64px;height:64px}
+  .color-chip{width:30px;height:30px}
+  .ctrl-input{font-size:16px}
+}
+
+/* ìì£¼ ìì íë©´ */
+@media(max-width:400px){
+  .design-thumb{width:44px;height:44px}
+  .channel-pills{gap:4px}
+  .channel-pill{padding:6px 10px;font-size:11px}
 }
 </style>
 </head>
 <body>
 
-<!-- 헤더 -->
-<div class="page-header">
-  <h1>차량 2부제 A형 입간판 노랑</h1>
-  <p id="headerDesc">시안 선택 후 상호명을 입력해주세요</p>
-</div>
+<div class="app-layout" id="appLayout">
 
-<!-- 주문 자동매칭 정보 바 -->
-<div class="order-info-bar" id="orderInfoBar">
-  주문코드 <span id="orderCodeDisplay"></span> 으로 연결되었습니다
-</div>
+  <!-- ì¼ìª½(ë°ì¤í¬í±) / ìë¨(ëª¨ë°ì¼): ìì ë¯¸ë¦¬ë³´ê¸° -->
+  <div class="preview-panel" id="previewPanel">
+    <canvas id="editorCanvas"></canvas>
+  </div>
 
-<!-- 시안 선택 바 -->
-<div class="design-bar" id="designBarWrap">
-  <div class="design-bar-inner" id="designBar"></div>
-</div>
+  <!-- ì¤ë¥¸ìª½(ë°ì¤í¬í±) / íë¨(ëª¨ë°ì¼): ì»¨í¸ë¡¤ -->
+  <div class="control-panel" id="controlPanel">
 
-<!-- 메인 영역 -->
-<div class="main-area">
-  <div class="editor-card" id="editorCard">
-
-    <!-- 시안 미리보기 -->
-    <div class="canvas-section">
-      <canvas id="editorCanvas"></canvas>
+    <!-- ì£¼ë¬¸ì½ë ë° -->
+    <div class="order-code-bar" id="orderCodeBar">
+      ì£¼ë¬¸ì½ë <span id="orderCodeDisplay"></span> ìëì°ê²°
     </div>
 
-    <!-- 입력 영역: 텍스트 + 색상만 -->
-    <div class="input-section">
+    <!-- 1. ìì ì í -->
+    <div class="section" id="designSection">
+      <div class="section-title">1. ìì ì í</div>
+      <div class="design-grid" id="designBar"></div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- 2. ìë ¥ & ì¤íì¼ -->
+    <div class="section">
+      <div class="section-title">2. íì¤í¸ ìë ¥</div>
       <div class="ctrl-group">
-        <label>상호/기관명</label>
-        <input class="ctrl-input" type="text" id="inputText" placeholder="예: 하나아파트" maxlength="20">
+        <label>ìí¸/ê¸°ê´ëª</label>
+        <input class="ctrl-input" type="text" id="inputText" placeholder="ì: ìê·¸ë ì¤íëì¤ ì¹´í" maxlength="20">
       </div>
       <div class="ctrl-group">
-        <label>글자 색상</label>
+        <label>ê¸ì ìì</label>
         <div class="color-row" id="colorRow"></div>
       </div>
     </div>
 
-    <div class="divider"></div>
+    <div class="sep"></div>
 
-    <!-- 주문 정보 -->
-    <div class="order-section" id="orderSection">
+    <!-- 3. ì£¼ë¬¸ ì ë³´ -->
+    <div class="section" id="orderSection">
+      <div class="section-title">3. ì£¼ë¬¸ ì ë³´</div>
 
-      <!-- 자동매칭 안내 (주문코드 있을 때만 표시) -->
+      <!-- ìëë§¤ì¹­ ìë´ -->
       <div class="auto-match-info" id="autoMatchInfo" style="display:none">
-        <strong>자동 연결됨</strong> — 주문 정보가 자동으로 연결되어 별도 입력이 필요 없습니다.
+        <div class="match-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+        <div><strong>ì£¼ë¬¸ ìëì°ê²°</strong><br>ì£¼ë¬¸ ì ë³´ê° ìëì¼ë¡ ë§¤ì¹­ëì´ ë³ë ìë ¥ì´ íì ììµëë¤.</div>
       </div>
 
-      <!-- 주문처 (주문코드 없을 때만 표시) -->
+      <!-- ì£¼ë¬¸ì² -->
       <div class="order-row" id="channelRow">
-        <label class="row-label">주문처</label>
-        <div class="radio-group">
-          <label><input type="radio" name="orderChannel" value="hanasignmall.kr" checked>Hanasignmall.kr</label>
-          <label><input type="radio" name="orderChannel" value="hanasignmall.com">Hanasignmall.com</label>
-          <label><input type="radio" name="orderChannel" value="smartstore">스마트스토어</label>
-          <label><input type="radio" name="orderChannel" value="gmarket">G마켓</label>
-          <label><input type="radio" name="orderChannel" value="auction">옥션</label>
-          <label><input type="radio" name="orderChannel" value="coupang">쿠팡</label>
-          <label><input type="radio" name="orderChannel" value="11st">11번가</label>
-          <label><input type="radio" name="orderChannel" value="phone">전화주문</label>
+        <div class="row-label">ì£¼ë¬¸ ì±ë</div>
+        <div class="channel-pills" id="channelPills">
+          <label class="channel-pill active"><input type="radio" name="orderChannel" value="hanasignmall.kr" checked>íëì¬ì¸ëª°.kr</label>
+          <label class="channel-pill"><input type="radio" name="orderChannel" value="hanasignmall.com">íëì¬ì¸ëª°.com</label>
+          <label class="channel-pill"><input type="radio" name="orderChannel" value="smartstore">ì¤ë§í¸ì¤í ì´</label>
+          <label class="channel-pill"><input type="radio" name="orderChannel" value="gmarket">Gë§ì¼</label>
+          <label class="channel-pill"><input type="radio" name="orderChannel" value="auction">ì¥ì</label>
+          <label class="channel-pill"><input type="radio" name="orderChannel" value="coupang">ì¿ í¡</label>
+          <label class="channel-pill"><input type="radio" name="orderChannel" value="11st">11ë²ê°</label>
+          <label class="channel-pill"><input type="radio" name="orderChannel" value="phone">ì íì£¼ë¬¸</label>
         </div>
       </div>
 
-      <!-- 주문자명 -->
-      <div class="order-row" id="nameRow">
-        <label class="row-label">주문자명</label>
-        <input class="order-input" type="text" id="nameInput" placeholder="주문자명을 입력해주세요">
+      <!-- ì£¼ë¬¸ì / ì°ë½ì² (2ì´) -->
+      <div style="display:flex;gap:12px" id="namePhoneRow">
+        <div class="order-row" id="nameRow" style="flex:1">
+          <div class="row-label">ì£¼ë¬¸ìëª</div>
+          <input class="order-input" type="text" id="nameInput" placeholder="íê¸¸ë">
+        </div>
+        <div class="order-row" id="phoneRow" style="flex:1">
+          <div class="row-label">ì°ë½ì²</div>
+          <input class="order-input" type="tel" id="phoneInput" placeholder="010-1234-5678">
+        </div>
       </div>
 
-      <!-- 연락처 -->
-      <div class="order-row" id="phoneRow">
-        <label class="row-label">연락처</label>
-        <input class="order-input" type="tel" id="phoneInput" placeholder="010-0000-0000">
-      </div>
-
-      <button class="btn-submit" id="btnSubmit">시안 확정 및 발송하기</button>
-      <div class="warning-text">발송 후에는 수정이 어렵사오니 반드시 심사숙고해주셔서 발송 바랍니다.</div>
+      <div class="warning-text">ì£¼ë¬¸ì ì ìíìëë¤. ë°ì¡ í ìì ì´ ì´ë µìµëë¤.</div>
+      <button class="btn-submit" id="btnSubmit">ìì íì  ë° ì£¼ë¬¸ ìë£ &rarr;</button>
     </div>
 
-    <!-- 완료 화면 -->
+    <!-- ìë£ íë©´ -->
     <div class="complete-screen" id="completeScreen">
-      <div class="check-icon">✅</div>
-      <h2>시안 발송 완료</h2>
+      <div class="check-icon">&#x2705;</div>
+      <h2>ìì ë°ì¡ ìë£</h2>
       <p id="completeMsg"></p>
-      <p style="font-size:13px;color:#999;margin-top:20px">이 페이지를 닫으셔도 됩니다.</p>
+      <p style="font-size:12px;color:#475569;margin-top:24px">ì´ íì´ì§ë¥¼ ë«ì¼ìë ë©ëë¤.</p>
     </div>
 
   </div>
 </div>
 
 <script>
-/* ───── 설정 ───── */
+/* âââââ ì¤ì  âââââ */
 const IMG_BASE = 'https://ad.hanasm.kr/gsfiles_room/';
 const DESIGN_IMAGES = {
   "des01": IMG_BASE + "/2026/04/02/97635dc3a9299a50b74d4ae1b572a3bfe6466a9a.png",
@@ -207,7 +229,6 @@ const DESIGNS = [
   { id:'des06', name:'06', src: DESIGN_IMAGES['des06'], defaultFontSize:22, defaultColor:'#1a1a1a' },
 ];
 
-/* 고정값 (회의록 3번: 폰트/사이즈/굵기/위치/배경 모두 고정) */
 const FIXED_FONT = 'Noto Sans KR';
 const FIXED_FONT_SIZE = 35;
 const FIXED_FONT_WEIGHT = 700;
@@ -215,16 +236,16 @@ const STRETCH_PX = 40;
 const BOTTOM_PAD_PX = 30;
 
 const COLORS = [
-  {n:'검정',v:'#1a1a1a'},{n:'흰색',v:'#ffffff'},{n:'빨강',v:'#CC0000'},{n:'파랑',v:'#003399'},
-  {n:'노랑',v:'#FFD700'},{n:'초록',v:'#006633'},{n:'주황',v:'#FF6600'},{n:'갈색',v:'#663300'},
+  {n:'ê²ì ',v:'#1a1a1a'},{n:'í°ì',v:'#ffffff'},{n:'ë¹¨ê°',v:'#CC0000'},{n:'íë',v:'#003399'},
+  {n:'ë¸ë',v:'#FFD700'},{n:'ì´ë¡',v:'#006633'},{n:'ì£¼í©',v:'#FF6600'},{n:'ê°ì',v:'#663300'},
 ];
 
-/* ───── 상태 ───── */
+/* âââââ ìí âââââ */
 let selectedDesign = null;
 let currentColor = '#1a1a1a';
 let loadedImages = {};
 
-/* ───── URL 파라미터 파싱 (4번: 주문-시안 자동 매칭) ───── */
+/* âââââ URL íë¼ë¯¸í° âââââ */
 const urlParams = new URLSearchParams(window.location.search);
 const ORDER_CODE = urlParams.get('order_code') || '';
 const PARAM_DESIGN = urlParams.get('design') || '';
@@ -233,7 +254,7 @@ const PARAM_NAME = urlParams.get('name') || '';
 const PARAM_PHONE = urlParams.get('phone') || '';
 const IS_AUTO_MODE = !!ORDER_CODE;
 
-/* ───── 이미지 프리로드 ───── */
+/* âââââ ì´ë¯¸ì§ íë¦¬ë¡ë âââââ */
 function preloadImages(designList) {
   return Promise.all(designList.map(d => new Promise(r => {
     const img = new Image();
@@ -243,7 +264,7 @@ function preloadImages(designList) {
   })));
 }
 
-/* ───── 캔버스 렌더링 (간소화: 고정값 사용) ───── */
+/* âââââ ìºë²ì¤ ë ëë§ âââââ */
 function renderDesign(canvas, des, mainText, textColor) {
   const img = loadedImages[des.id];
   if (!img) return;
@@ -276,7 +297,7 @@ function renderDesign(canvas, des, mainText, textColor) {
     ctx.font = `500 ${Math.round(stretchH * 0.45)}px "Noto Sans KR",sans-serif`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('상호/기관명', iw * 0.5, textCenterY);
+    ctx.fillText('ìí¸/ê¸°ê´ëª', iw * 0.5, textCenterY);
   } else {
     const scaledFS = Math.round(FIXED_FONT_SIZE * (iw / 1000));
     ctx.font = `${FIXED_FONT_WEIGHT} ${scaledFS}px "${FIXED_FONT}",sans-serif`;
@@ -287,21 +308,20 @@ function renderDesign(canvas, des, mainText, textColor) {
   }
 }
 
-/* ───── 시안 바 초기화 ───── */
+/* âââââ ìì ë° ì´ê¸°í âââââ */
 function initDesignBar(designList) {
   const bar = document.getElementById('designBar');
-  const wrap = document.getElementById('designBarWrap');
   bar.innerHTML = '';
 
   if (designList.length === 1) {
-    wrap.classList.add('single-mode');
+    document.getElementById('designSection').querySelector('.design-grid').classList.add('single-mode');
   }
 
   designList.forEach(d => {
     const thumb = document.createElement('div');
     thumb.className = 'design-thumb' + (d.id === selectedDesign.id ? ' selected' : '');
     thumb.dataset.id = d.id;
-    thumb.innerHTML = `<img src="${DESIGN_IMAGES[d.id]}"><div class="label">${d.name}</div>`;
+    thumb.innerHTML = `<img src="${DESIGN_IMAGES[d.id]}"><div class="label">${d.name}</div><div class="check-badge"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>`;
 
     if (designList.length > 1) {
       thumb.addEventListener('click', () => {
@@ -316,7 +336,7 @@ function initDesignBar(designList) {
   });
 }
 
-/* ───── 색상 팔레트 ───── */
+/* âââââ ìì íë í¸ âââââ */
 function initColorRow() {
   const row = document.getElementById('colorRow');
   row.innerHTML = '';
@@ -324,7 +344,7 @@ function initColorRow() {
     const chip = document.createElement('div');
     chip.className = 'color-chip' + (c.v === currentColor ? ' sel' : '');
     chip.style.background = c.v;
-    if (c.v === '#ffffff') chip.style.borderColor = '#bbb';
+    if (c.v === '#ffffff') chip.style.borderColor = '#555';
     chip.title = c.n;
     chip.dataset.c = c.v;
     chip.addEventListener('click', () => {
@@ -336,18 +356,29 @@ function initColorRow() {
   });
 }
 
-/* ───── 에디터 업데이트 ───── */
+/* âââââ ì±ë í ë²í¼ âââââ */
+function initChannelPills() {
+  document.querySelectorAll('.channel-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.channel-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      pill.querySelector('input').checked = true;
+    });
+  });
+}
+
+/* âââââ ìëí° ìë°ì´í¸ âââââ */
 function updateEditor() {
   if (!selectedDesign) return;
   const text = document.getElementById('inputText').value;
   renderDesign(document.getElementById('editorCanvas'), selectedDesign, text, currentColor);
 }
 
-/* ───── 발송 처리 ───── */
+/* âââââ ë°ì¡ ì²ë¦¬ âââââ */
 function submitOrder() {
   const text = document.getElementById('inputText').value.trim();
   if (!text) {
-    alert('상호/기관명을 입력해주세요.');
+    alert('ìí¸/ê¸°ê´ëªì ìë ¥í´ì£¼ì¸ì.');
     document.getElementById('inputText').focus();
     return;
   }
@@ -355,19 +386,19 @@ function submitOrder() {
   let orderName, phone, channel;
 
   if (IS_AUTO_MODE) {
-    orderName = PARAM_NAME || '(자동매칭)';
-    phone = PARAM_PHONE || '(자동매칭)';
-    channel = PARAM_CHANNEL || '(자동매칭)';
+    orderName = PARAM_NAME || '(ìëë§¤ì¹­)';
+    phone = PARAM_PHONE || '(ìëë§¤ì¹­)';
+    channel = PARAM_CHANNEL || '(ìëë§¤ì¹­)';
   } else {
     orderName = document.getElementById('nameInput').value.trim();
     if (!orderName) {
-      alert('주문자명을 입력해주세요.');
+      alert('ì£¼ë¬¸ìëªì ìë ¥í´ì£¼ì¸ì.');
       document.getElementById('nameInput').focus();
       return;
     }
     phone = document.getElementById('phoneInput').value.trim();
     if (!phone) {
-      alert('연락처를 입력해주세요.');
+      alert('ì°ë½ì²ë¥¼ ìë ¥í´ì£¼ì¸ì.');
       document.getElementById('phoneInput').focus();
       return;
     }
@@ -390,35 +421,28 @@ function submitOrder() {
     timestamp: new Date().toISOString()
   };
 
-  // TODO: 서버 발송 연동
-  console.log('[발송 데이터]', payload);
+  // TODO: ìë² ë°ì¡ ì°ë
+  console.log('[ë°ì¡ ë°ì´í°]', payload);
 
-  // 완료 화면 표시
-  document.getElementById('editorCard').querySelectorAll('.canvas-section, .input-section, .divider, .order-section').forEach(el => el.style.display = 'none');
+  // ìë£ íë©´ íì
+  document.querySelectorAll('#designSection, #orderSection, .sep').forEach(el => el.style.display = 'none');
+  document.getElementById('orderCodeBar').style.display = 'none';
   const complete = document.getElementById('completeScreen');
-  complete.style.display = 'block';
+  complete.classList.add('show');
   document.getElementById('completeMsg').innerHTML =
-    `시안 <strong>${selectedDesign.name}</strong>번 / 상호명 <strong>${text}</strong><br>` +
-    (IS_AUTO_MODE ? `주문코드 <strong>${ORDER_CODE}</strong>로 자동 연결되었습니다.` : `주문자 <strong>${orderName}</strong> / 연락처 <strong>${phone}</strong>`);
+    `ìì <strong>${selectedDesign.name}</strong>ë² / ìí¸ëª <strong>${text}</strong><br>` +
+    (IS_AUTO_MODE ? `ì£¼ë¬¸ì½ë <strong>${ORDER_CODE}</strong>ë¡ ìë ì°ê²°ëììµëë¤.` : `ì£¼ë¬¸ì <strong>${orderName}</strong> / ì°ë½ì² <strong>${phone}</strong>`);
 
-  alert('시안이 발송되었습니다.');
+  alert('ììì´ ë°ì¡ëììµëë¤.');
 }
 
-/* ───── 자동매칭 모드 설정 (4번) ───── */
+/* âââââ ìëë§¤ì¹­ ëª¨ë âââââ */
 function setupAutoMode() {
   if (!IS_AUTO_MODE) return;
 
-  // 주문코드 바 표시
-  document.getElementById('orderInfoBar').style.display = 'block';
+  document.getElementById('orderCodeBar').style.display = 'block';
   document.getElementById('orderCodeDisplay').textContent = ORDER_CODE;
-
-  // 헤더 문구 변경
-  document.getElementById('headerDesc').textContent = '상호/기관명을 입력하고 색상을 선택해주세요';
-
-  // 자동매칭 안내 표시
-  document.getElementById('autoMatchInfo').style.display = 'block';
-
-  // 주문처/주문자명/연락처 숨김
+  document.getElementById('autoMatchInfo').style.display = 'flex';
   document.getElementById('channelRow').style.display = 'none';
 
   if (PARAM_NAME) {
@@ -435,17 +459,22 @@ function setupAutoMode() {
     document.getElementById('phoneRow').style.display = 'none';
   }
 
-  // 주문처 자동 선택
+  if (!PARAM_NAME && !PARAM_PHONE) {
+    document.getElementById('namePhoneRow').style.display = 'none';
+  }
+
   if (PARAM_CHANNEL) {
     const radio = document.querySelector(`input[name="orderChannel"][value="${PARAM_CHANNEL}"]`);
-    if (radio) radio.checked = true;
+    if (radio) {
+      radio.checked = true;
+      document.querySelectorAll('.channel-pill').forEach(p => p.classList.remove('active'));
+      radio.closest('.channel-pill').classList.add('active');
+    }
   }
 }
 
-/* ───── 초기화 ───── */
+/* âââââ ì´ê¸°í âââââ */
 document.addEventListener('DOMContentLoaded', async () => {
-
-  // 4번: 특정 시안만 불러오기 (파라미터 있을 때)
   let activeDesigns = DESIGNS;
   if (PARAM_DESIGN) {
     const match = DESIGNS.filter(d => d.id === PARAM_DESIGN);
@@ -458,9 +487,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   await preloadImages(activeDesigns);
   initDesignBar(activeDesigns);
   initColorRow();
+  initChannelPills();
   setupAutoMode();
 
-  // 이벤트
   document.getElementById('inputText').addEventListener('input', updateEditor);
   document.getElementById('btnSubmit').addEventListener('click', submitOrder);
 
