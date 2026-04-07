@@ -204,6 +204,20 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f5f6f8;co
 .quick-modal .qm-btn-submit.red:hover{background:linear-gradient(135deg,#334155 0%,#1e293b 100%)}
 .quick-modal .qm-btn-submit.green{background:linear-gradient(135deg,#059669 0%,#047857 100%)}
 .quick-modal .qm-btn-submit.green:hover{background:linear-gradient(135deg,#047857 0%,#065f46 100%)}
+
+/* ─── 인트로 단일 레이아웃 ─── */
+.intro-single{display:flex;flex-direction:column;align-items:center;width:100%;max-width:620px}
+.intro-sian-img{width:100%;border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 4px 20px rgba(0,0,0,0.13);margin-bottom:20px}
+.intro-sian-img img{width:100%;display:block;border-radius:16px}
+.intro-btn-group{display:flex;flex-direction:column;gap:10px;width:100%;margin-bottom:10px}
+.intro-btn{width:100%;padding:20px 20px;border:none;border-radius:12px;font-size:16px;font-weight:900;font-style:italic;cursor:pointer;font-family:inherit;letter-spacing:-0.3px;text-align:center;position:relative;transition:transform 0.08s,box-shadow 0.08s}
+.intro-btn.input-text{background:linear-gradient(180deg,#3b82f6 0%,#1d4ed8 100%);color:#fff;box-shadow:0 6px 0 #1e3a8a,0 8px 16px rgba(29,78,216,0.35);text-shadow:0 1px 2px rgba(0,0,0,0.25)}
+.intro-btn.input-text:hover{background:linear-gradient(180deg,#60a5fa 0%,#2563eb 100%)}
+.intro-btn.input-text:active{transform:translateY(4px);box-shadow:0 2px 0 #1e3a8a,0 4px 8px rgba(29,78,216,0.2)}
+.intro-btn.no-text{background:linear-gradient(180deg,#64748b 0%,#334155 100%);color:#fff;box-shadow:0 6px 0 #1e293b,0 8px 16px rgba(51,65,85,0.35);text-shadow:0 1px 2px rgba(0,0,0,0.25)}
+.intro-btn.no-text:hover{background:linear-gradient(180deg,#94a3b8 0%,#475569 100%)}
+.intro-btn.no-text:active{transform:translateY(4px);box-shadow:0 2px 0 #1e293b,0 4px 8px rgba(51,65,85,0.2)}
+.intro-must{width:100%;text-align:center;font-size:18px;font-weight:800;color:#dc2626;margin-bottom:20px;padding:14px 16px;background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;line-height:1.5}
 </style>
 </head>
 <body>
@@ -336,7 +350,6 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f5f6f8;co
           <label class="channel-pill"><input type="radio" name="orderChannel" value="auction">옥션</label>
           <label class="channel-pill"><input type="radio" name="orderChannel" value="coupang">쿠팡</label>
           <label class="channel-pill"><input type="radio" name="orderChannel" value="11st">11번가</label>
-          <label class="channel-pill"><input type="radio" name="orderChannel" value="phone"></label>
         </div>
       </div>
 
@@ -684,39 +697,42 @@ function setupAutoMode() {
 }
 
 /* ───── 인트로 페이지 ───── */
-/* ───── 인트로 카드 생성 ───── */
-function buildIntroCards(designs) {
-  const grid = document.getElementById('introGrid');
-  grid.innerHTML = '';
+function buildIntroPage(designs) {
+  const wrap = document.getElementById('introSingle');
+  wrap.innerHTML = '';
   const des = designs[0];
-  // ── 카드 1: 상호필요없음 → 모달 ──
-  const card1 = document.createElement('div');
-  card1.className = 'intro-card';
-  card1.innerHTML = `
-    <div class="intro-card-img">
-      <img src="${INTRO_IMG_NO_TEXT}" alt="상호없음 시안">
-    </div>
-    <button class="intro-card-btn no-text">상호 필요없음</button>
-  `;
-  card1.querySelector('.intro-card-btn').addEventListener('click', () => {
-    openQuickModal(des, 'no-text');
+  const imgBox = document.createElement('div');
+  imgBox.className = 'intro-sian-img';
+  imgBox.innerHTML = `<img src="${des.src}" alt="시안 ${des.name}">`;
+  const btnGroup = document.createElement('div');
+  btnGroup.className = 'intro-btn-group';
+  const btnInput = document.createElement('button');
+  btnInput.className = 'intro-btn input-text';
+  btnInput.innerHTML = '<span style="font-size:50px;font-weight:900;font-style:italic;color:#ffe000;line-height:1;">5초!</span> <span style="font-size:30px;font-weight:900;font-style:italic;">상호 입력!</span>';
+  btnInput.addEventListener('click', () => goToEditor(des));
+  const btnNoText = document.createElement('button');
+  btnNoText.className = 'intro-btn no-text';
+  btnNoText.innerHTML = '<span style="display:block;font-size:30px;font-weight:900;font-style:italic;">상호없이 제작</span>';
+  btnNoText.addEventListener('click', () => {
+    if (IS_AUTO_MODE) { submitNoTextAuto(des); } else { openQuickModal(des, 'no-text'); }
   });
-
-  // ── 카드 2: 상호직접입력 → 에디터 ──
-  const card2 = document.createElement('div');
-  card2.className = 'intro-card';
-  card2.innerHTML = `
-    <div class="intro-card-img">
-      <img src="${INTRO_IMG_HAS_TEXT}" alt="상호입력 시안">
-    </div>
-    <button class="intro-card-btn input-text">상호 직접입력하기</button>
-  `;
-  card2.querySelector('.intro-card-btn').addEventListener('click', () => {
-    goToEditor(des);
-  });
-
-  grid.appendChild(card1);
-  grid.appendChild(card2);
+  btnGroup.appendChild(btnInput);
+  btnGroup.appendChild(btnNoText);
+  const mustEl = document.createElement('div');
+  mustEl.className = 'intro-must';
+  mustEl.innerHTML = '⚠ 두 옵션 중 반드시 선택하셔야 제품 출고가 가능합니다.';
+  wrap.appendChild(imgBox);
+  wrap.appendChild(btnGroup);
+  wrap.appendChild(mustEl);
+}
+function submitNoTextAuto(design) {
+  const payload = {order_code:ORDER_CODE,design:design.name,design_id:design.id,mode:'no-text',text:'(상호없음)',channel:PARAM_CHANNEL||'',orderName:PARAM_NAME||'',phone:PARAM_PHONE||'',timestamp:new Date().toISOString()};
+  console.log('[자동 상호없이 발송]', payload);
+  showCompleteScreen({design,mode:'no-text',text:'(상호없음)'});
+}
+function showCompleteScreen({design,mode,text}) {
+  const wrap = document.getElementById('introSingle');
+  wrap.innerHTML = `<div style="text-align:center;padding:20px 0;"><div style="font-size:64px;margin-bottom:16px;">✅</div><div style="font-size:20px;font-weight:800;color:#2563eb;margin-bottom:12px;">주문 접수 완료!</div><div style="font-size:15px;color:#475569;line-height:1.9;">시안 <strong style="color:#1e293b;">${design.name}번</strong><br>${mode==='no-text'?'<strong style="color:#dc2626;">상호없이 제작</strong>':''}<br>정상 접수되었습니다.</div></div>`;
 }
 
 /* ───── 간편주문 모달 ───── */
@@ -731,7 +747,6 @@ const QM_CHANNELS = [
   {v:'auction', n:'옥션'},
   {v:'coupang', n:'쿠팡'},
   {v:'11st', n:'11번가'},
-  {v:'phone', n:''},
 ];
 
 function initQuickModal() {
@@ -852,7 +867,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   await preloadImages(activeDesigns);
 
   // 인트로 카드 생성
-  buildIntroCards(activeDesigns);
+  buildIntroPage(activeDesigns);
   initQuickModal();
 
   initDesignBar(activeDesigns);
