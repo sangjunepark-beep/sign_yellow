@@ -171,13 +171,10 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f5f6f8;co
 .intro-bottom{flex-shrink:0;padding:10px 16px 0}
 
 /* 선택 유도 배너 */
-.intro-prompt{background:#f8f9fb;border-radius:12px;padding:10px 14px;margin-bottom:10px;display:flex;align-items:center;gap:10px;border:1px solid #eef0f4}
-.intro-prompt .p-icon{font-size:18px;flex-shrink:0}
-.intro-prompt .p-text{flex:1}
-.intro-prompt .p-main{font-size:14px;font-weight:800;color:#1a2e5a}
-.intro-prompt .p-sub{font-size:10px;color:#94a3b8;margin-top:1px}
-.intro-prompt .p-arrow{font-size:16px;color:#94a3b8;animation:bd 1.2s infinite;flex-shrink:0}
-@keyframes bd{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+/* 상단 화살표 — 점선 오버레이를 가리키는 큰 화살표 */
+.intro-arrow-up{text-align:center;padding:6px 0 2px;animation:arrow-bounce 1.2s ease-in-out infinite}
+.intro-arrow-up svg{width:48px;height:32px;filter:drop-shadow(0 2px 4px rgba(26,46,90,.25))}
+@keyframes arrow-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 
 /* 버튼 영역 */
 .intro-btn-group{display:flex;flex-direction:column;gap:10px}
@@ -212,8 +209,6 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f5f6f8;co
 .intro-btn{padding:13px 14px;border-radius:12px}
 .intro-btn.input-text .ib-main{font-size:20px}
 .intro-btn.no-text .ib-main{font-size:15px}
-.intro-prompt{padding:8px 10px;margin-bottom:8px}
-.intro-prompt .p-main{font-size:13px}
 .intro-notice{font-size:12px;padding:8px 0 10px}
 }
 @media(max-width:380px){
@@ -221,7 +216,6 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f5f6f8;co
 .intro-btn.input-text .ib-main{font-size:18px}
 .intro-btn.no-text .ib-main{font-size:14px}
 .intro-btn{padding:11px 12px}
-.intro-prompt{padding:6px 8px;margin-bottom:6px}
 .intro-notice{font-size:11px;padding:6px 0 8px}
 }
 @media(max-height:650px){
@@ -231,9 +225,6 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f5f6f8;co
 .intro-btn .ib-icon{font-size:22px}
 .intro-btn.input-text .ib-main{font-size:18px}
 .intro-btn.no-text .ib-main{font-size:14px}
-.intro-prompt{padding:6px 10px;margin-bottom:6px}
-.intro-prompt .p-main{font-size:12px}
-.intro-prompt .p-sub{display:none}
 .intro-notice{font-size:11px;padding:4px 0 6px}
 .intro-sangho-overlay .placeholder-text{font-size:14px}
 }
@@ -752,7 +743,7 @@ function buildIntroPage(designs) {
   previewArea.innerHTML = '<div class="intro-preview-card"><img src="' + des.src + '" alt="시안 ' + des.name + '"><div class="intro-sangho-overlay"><span class="edit-icon">✏️</span><span class="placeholder-text"><span id="introTypingText"></span><span class="cursor-blink"></span></span></div></div>';
   const bottom = document.createElement('div');
   bottom.className = 'intro-bottom';
-  bottom.innerHTML = '<div class="intro-prompt"><div class="p-icon">👇</div><div class="p-text"><div class="p-main">하나를 선택해주세요</div><div class="p-sub">선택하시면 다음 단계로 바로 이동합니다</div></div><div class="p-arrow">▼</div></div>';
+  bottom.innerHTML = '<div class="intro-arrow-up"><svg viewBox="0 0 60 40" fill="none"><path d="M30 5 L55 35 H5 Z" fill="#1a2e5a"/></svg></div>';
   const btnGroup = document.createElement('div');
   btnGroup.className = 'intro-btn-group';
   const btnInput = document.createElement('button');
