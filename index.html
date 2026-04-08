@@ -146,87 +146,79 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f5f6f8;co
 }
 
 /* ─── 인트로 페이지 ─── */
-.intro-page{height:100dvh;background:#eef1f6;display:flex;flex-direction:column;overflow:hidden;max-width:520px;margin:0 auto;width:100%}
+.intro-page{height:100dvh;background:#ffffff;display:flex;flex-direction:column;overflow:hidden;max-width:520px;margin:0 auto;width:100%}
 .intro-page.hidden{display:none}
-
-/* 헤더 */
 .intro-header{background:#1a2e5a;color:#fff;padding:10px 20px;display:flex;align-items:center;justify-content:center;gap:8px;flex-shrink:0}
 .intro-header .brand{font-size:13px;font-weight:800;letter-spacing:1px;color:#FEE500}
 .intro-header .sep{color:#4a6fa5;font-size:10px}
 .intro-header .header-title{font-size:13px;font-weight:600;color:#c8dcff}
-
-/* 상품명 바 */
-.intro-order-bar{background:#f4f6f9;border-bottom:1px solid #e0e5ef;padding:8px 20px;text-align:center;flex-shrink:0}
+.intro-order-bar{background:#f8f9fb;border-bottom:1px solid #eee;padding:8px 20px;text-align:center;flex-shrink:0}
 .intro-order-bar .product{font-size:14px;font-weight:700;color:#1a2e5a}
 
-/* 시안 이미지 영역 — 크게 */
-.intro-preview-area{flex:1;display:flex;align-items:center;justify-content:center;padding:12px 16px 4px;min-height:0;overflow:hidden}
-.intro-preview-card{position:relative;max-height:100%;width:100%;display:flex;justify-content:center;line-height:0;overflow:hidden;border-radius:6px}
-.intro-preview-card img{max-height:100%;width:100%;height:auto;object-fit:contain;display:block;border-radius:6px}
+/* 시안 이미지 영역 — 20% 확대 */
+.intro-preview-area{flex:1;display:flex;align-items:center;justify-content:center;padding:10px 14px 6px;min-height:0;overflow:hidden}
+.intro-preview-card{position:relative;max-height:100%;width:100%;display:flex;justify-content:center;line-height:0;overflow:hidden;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,0.06)}
+.intro-preview-card img{max-height:100%;width:100%;height:auto;object-fit:contain;display:block;border-radius:12px;transform:scale(1.2);transform-origin:center center}
 
-/* 상호 오버레이 — 노랑 맞춤, 크기/위치 조정 */
-.intro-sangho-overlay{position:absolute;bottom:2%;left:50%;transform:translateX(-50%);width:62%;border:2.5px dashed #e74c3c;border-radius:6px;padding:8px 12px;text-align:center;background:rgba(254,229,0,.95);z-index:2;display:flex;align-items:center;justify-content:center;gap:6px}
-.intro-sangho-overlay .edit-icon{font-size:22px;flex-shrink:0}
-.intro-sangho-overlay .placeholder-text{font-size:28px;font-weight:900;color:#1a2e5a;letter-spacing:5px;line-height:1.2}
-.intro-sangho-overlay .cursor-blink{display:inline-block;width:3px;height:28px;background:#1a2e5a;margin-left:3px;vertical-align:middle;animation:blink-cursor .8s step-end infinite}
+/* 상호 오버레이 — 하단에 맞추기 */
+.intro-sangho-overlay{position:absolute;bottom:4%;left:50%;transform:translateX(-50%);width:58%;border:2px dashed #e74c3c;border-radius:6px;padding:6px 10px;text-align:center;background:rgba(254,229,0,.92);z-index:2;display:flex;align-items:center;justify-content:center;gap:4px}
+.intro-sangho-overlay .edit-icon{font-size:15px;flex-shrink:0}
+.intro-sangho-overlay .placeholder-text{font-size:24px;font-weight:900;color:#1a2e5a;letter-spacing:4px;line-height:1.2}
+.cursor-blink{display:inline-block;width:2px;height:22px;background:#1a2e5a;margin-left:2px;vertical-align:middle;animation:blink-cursor .8s step-end infinite}
 @keyframes blink-cursor{0%,100%{opacity:1}50%{opacity:0}}
 
-/* 하단 영역 — 넉넉하게 */
-.intro-bottom{flex-shrink:0;padding:10px 16px 0;border-top:1px solid #ddd;background:#fff}
+/* 하단 영역 — 깔끔한 카드 스타일 */
+.intro-bottom{flex-shrink:0;padding:10px 16px 0}
 
-/* 선택 유도 배너 */
-.intro-prompt{background:linear-gradient(135deg,#1a2e5a,#2d4a8a);border-radius:12px;padding:12px 16px;margin-bottom:10px;display:flex;align-items:center;gap:10px}
-.intro-prompt .p-icon{font-size:22px;flex-shrink:0}
+/* 선택 유도 배너 — 세련된 스타일 */
+.intro-prompt{background:#f8f9fb;border-radius:12px;padding:10px 14px;margin-bottom:10px;display:flex;align-items:center;gap:10px;border:1px solid #eef0f4}
+.intro-prompt .p-icon{font-size:18px;flex-shrink:0}
 .intro-prompt .p-text{flex:1}
-.intro-prompt .p-main{font-size:16px;font-weight:800;color:#FEE500}
-.intro-prompt .p-sub{font-size:11px;color:#9bb4e0;margin-top:2px}
-.intro-prompt .p-arrow{font-size:20px;color:#FEE500;animation:bd 1.2s infinite;flex-shrink:0}
+.intro-prompt .p-main{font-size:14px;font-weight:800;color:#1a2e5a}
+.intro-prompt .p-sub{font-size:10px;color:#94a3b8;margin-top:1px}
+.intro-prompt .p-arrow{font-size:16px;color:#94a3b8;animation:bd 1.2s infinite;flex-shrink:0}
 @keyframes bd{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
 
-/* 버튼 그룹 — 크게 */
+/* 버튼 영역 */
 .intro-btn-group{display:flex;flex-direction:column;gap:10px}
-.intro-btn{width:100%;border:none;border-radius:16px;padding:18px 18px;cursor:pointer;display:flex;align-items:center;gap:14px;transition:all .15s;position:relative;overflow:hidden;font-family:inherit}
-.intro-btn .ib-icon{font-size:30px;flex-shrink:0}
+
+/* 공통 버튼 — 모던 카드형 */
+.intro-btn{width:100%;border:none;border-radius:14px;padding:16px 18px;cursor:pointer;display:flex;align-items:center;gap:14px;transition:all .15s;position:relative;overflow:hidden;font-family:inherit}
+.intro-btn .ib-icon{font-size:26px;flex-shrink:0}
 .intro-btn .ib-text{flex:1;text-align:left}
-.intro-btn .ib-sub{font-size:12px;margin-top:3px}
+.intro-btn .ib-sub{font-size:11px;margin-top:2px}
 
-/* 5초 상호입력 버튼 — 크게, 글로우 */
-.intro-btn.input-text{background:linear-gradient(135deg,#1a2e5a,#2d4a8a);color:#fff;border:2.5px solid #e74c3c;animation:glow-pulse 1.5s ease-in-out infinite}
-@keyframes glow-pulse{0%,100%{box-shadow:0 0 6px rgba(231,76,60,.5),0 0 14px rgba(231,76,60,.25);border-color:#e74c3c}50%{box-shadow:0 0 12px rgba(231,76,60,.8),0 0 28px rgba(231,76,60,.4);border-color:#ff6b5a}}
+/* Primary 버튼 — 딥 네이비 + 레드 글로우 */
+.intro-btn.input-text{background:#1a2e5a;color:#fff;border:2px solid #e74c3c;animation:glow-pulse 1.5s ease-in-out infinite}
+@keyframes glow-pulse{0%,100%{box-shadow:0 0 4px rgba(231,76,60,.4),0 0 10px rgba(231,76,60,.15);border-color:#e74c3c}50%{box-shadow:0 0 8px rgba(231,76,60,.7),0 0 20px rgba(231,76,60,.3);border-color:#ff6b5a}}
 .intro-btn.input-text:active{transform:scale(.98)}
-.intro-btn.input-text .ib-main{font-size:26px;font-weight:900;color:#FEE500}
-.intro-btn.input-text .ib-sub{color:#9bb4e0}
-.intro-btn.input-text .ib-arrow{color:#ff6b5a;font-size:22px;font-weight:700}
+.intro-btn.input-text .ib-main{font-size:22px;font-weight:900;color:#FEE500}
+.intro-btn.input-text .ib-sub{color:rgba(255,255,255,.55)}
+.intro-btn.input-text .ib-arrow{color:#ff6b5a;font-size:20px;font-weight:700}
 
-/* 상호없이 제작 — 밝은 배경, 글자 보이게 */
-.intro-btn.no-text{background:#f0f2f5;color:#333;border:2px solid #ccc}
-.intro-btn.no-text:active{background:#e4e7ec}
-.intro-btn.no-text .ib-main{font-size:20px;font-weight:700;color:#444}
-.intro-btn.no-text .ib-sub{color:#777}
-.intro-btn.no-text .ib-arrow{color:#888;font-size:20px}
+/* Secondary 버튼 — 옅은 회색 배경 + 글자 잘 보이게 */
+.intro-btn.no-text{background:#f1f3f6;color:#333;border:1.5px solid #dde0e6}
+.intro-btn.no-text:active{background:#e8eaef}
+.intro-btn.no-text .ib-main{font-size:17px;font-weight:700;color:#444}
+.intro-btn.no-text .ib-sub{color:#888}
+.intro-btn.no-text .ib-arrow{color:#aaa;font-size:18px}
 
-/* 하단 공지 — 크게 두껍게 */
+/* 하단 공지 */
 .intro-notice{padding:10px 0 14px;text-align:center;font-size:13px;color:#666;line-height:1.6;font-weight:600}
 .intro-notice em{font-style:normal;color:#e74c3c;font-weight:800}
 
-/* 반응형: PC에서는 더 넉넉하게 */
+/* PC 반응형 */
 @media(min-width:521px){
-  .intro-page{box-shadow:0 0 20px rgba(0,0,0,0.08);border-radius:0}
-  .intro-preview-area{padding:16px 20px 6px}
-  .intro-bottom{padding:12px 20px 0}
-  .intro-btn{padding:20px 20px}
-  .intro-btn.input-text .ib-main{font-size:28px}
-  .intro-btn.no-text .ib-main{font-size:22px}
-  .intro-notice{font-size:14px}
+.intro-btn.input-text .ib-main{font-size:24px}
+.intro-btn.no-text .ib-main{font-size:19px}
+.intro-notice{font-size:14px}
 }
-
-/* 반응형: 작은 모바일 */
+/* 소형 모바일 */
 @media(max-width:380px){
-  .intro-sangho-overlay .placeholder-text{font-size:22px;letter-spacing:3px}
-  .intro-sangho-overlay .edit-icon{font-size:18px}
-  .intro-btn.input-text .ib-main{font-size:22px}
-  .intro-btn.no-text .ib-main{font-size:17px}
-  .intro-prompt .p-main{font-size:14px}
+.intro-sangho-overlay .placeholder-text{font-size:20px;letter-spacing:3px}
+.intro-btn.input-text .ib-main{font-size:20px}
+.intro-btn.no-text .ib-main{font-size:15px}
+.intro-notice{font-size:12px}
 }
 .intro-must{display:none}
 /* ─── 간편주문 모달 ─── */
