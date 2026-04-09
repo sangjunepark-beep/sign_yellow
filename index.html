@@ -148,6 +148,7 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f5f6f8;co
 /* ─── 인트로 페이지 ─── */
 .intro-page{height:100dvh;background:#ffffff;display:flex;flex-direction:column;overflow:hidden;max-width:680px;margin:0 auto;width:100%}
 .intro-page.hidden{display:none}
+.intro-single{flex:1;display:flex;flex-direction:column;min-height:0;overflow:hidden}
 .intro-header{background:#1a2e5a;color:#fff;padding:10px 20px;display:flex;align-items:center;justify-content:center;gap:8px;flex-shrink:0}
 .intro-header .brand{font-size:13px;font-weight:800;letter-spacing:1px;color:#FEE500}
 .intro-header .sep{color:#4a6fa5;font-size:10px}
@@ -156,7 +157,7 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f5f6f8;co
 .intro-order-bar .product{font-size:14px;font-weight:700;color:#1a2e5a}
 
 /* 시안 이미지 영역 */
-.intro-preview-area{flex:0 1 auto;display:flex;align-items:center;justify-content:center;padding:10px 14px 0;min-height:0;overflow:visible}
+.intro-preview-area{flex:1;display:flex;align-items:flex-end;justify-content:center;padding:0 14px 0;min-height:0;overflow:hidden}
 .intro-preview-card{position:relative;max-height:100%;width:100%;display:flex;justify-content:center;align-items:flex-end;line-height:0;overflow:visible;border-radius:12px}
 .intro-preview-card img{width:100%;height:auto;object-fit:contain;display:block;border-radius:12px}
 
