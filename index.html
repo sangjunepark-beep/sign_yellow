@@ -161,7 +161,7 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f5f6f8;co
 .intro-preview-card img{max-height:100%;width:100%;height:auto;object-fit:contain;display:block;border-radius:12px}
 
 /* 상호 오버레이 — 네이비 아래, 잘리지 않게 */
-.intro-sangho-overlay{position:absolute;bottom:1%;left:50%;transform:translateX(-50%);width:48%;border:1.5px dashed #e74c3c;border-radius:4px;padding:4px 8px;text-align:center;background:rgba(254,229,0,.92);z-index:2;display:flex;align-items:center;justify-content:center;gap:3px}
+.intro-sangho-overlay{position:absolute;bottom:8%;left:50%;transform:translateX(-50%);width:48%;border:clamp(2px,0.4vw,3px) dashed #e74c3c;border-radius:4px;padding:clamp(2px,0.6vw,4px) clamp(4px,1.2vw,8px);text-align:center;background:rgba(254,229,0,.92);z-index:2;display:flex;align-items:center;justify-content:center;gap:clamp(1px,0.5vw,3px)}
 .intro-sangho-overlay .edit-icon{font-size:12px;flex-shrink:0}
 .intro-sangho-overlay .placeholder-text{font-size:16px;font-weight:900;color:#1a2e5a;letter-spacing:3px;line-height:1.2}
 .cursor-blink{display:inline-block;width:2px;height:18px;background:#1a2e5a;margin-left:2px;vertical-align:middle;animation:blink-cursor .8s step-end infinite}
