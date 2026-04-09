@@ -146,9 +146,9 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f5f6f8;co
 }
 
 /* ─── 인트로 페이지 ─── */
-.intro-page{height:100dvh;background:#ffffff;display:flex;flex-direction:column;overflow:hidden;max-width:680px;margin:0 auto;width:100%}
+.intro-page{min-height:100dvh;background:#ffffff;display:flex;flex-direction:column;max-width:680px;margin:0 auto;width:100%}
 .intro-page.hidden{display:none}
-.intro-single{flex:1;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.intro-single{display:flex;flex-direction:column;min-height:0}
 .intro-header{background:#1a2e5a;color:#fff;padding:10px 20px;display:flex;align-items:center;justify-content:center;gap:8px;flex-shrink:0}
 .intro-header .brand{font-size:13px;font-weight:800;letter-spacing:1px;color:#FEE500}
 .intro-header .sep{color:#4a6fa5;font-size:10px}
@@ -157,12 +157,12 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f5f6f8;co
 .intro-order-bar .product{font-size:14px;font-weight:700;color:#1a2e5a}
 
 /* 시안 이미지 영역 */
-.intro-preview-area{flex:1;position:relative;min-height:0;overflow:hidden;padding:0}
-.intro-preview-card{position:absolute;bottom:0;left:14px;right:14px;line-height:0;overflow:visible;border-radius:12px}
+.intro-preview-area{padding:0}
+.intro-preview-card{position:relative;margin:0 14px;line-height:0;overflow:hidden;border-radius:12px}
 .intro-preview-card img{width:100%;height:auto;display:block;border-radius:12px}
 
-/* 상호 오버레이 — 네이비 아래, 잘리지 않게 */
-.intro-sangho-overlay{position:absolute;bottom:8%;left:50%;transform:translateX(-50%);width:48%;border:clamp(2px,0.4vw,3px) dashed #e74c3c;border-radius:4px;padding:clamp(2px,0.6vw,4px) clamp(4px,1.2vw,8px);text-align:center;background:rgba(254,229,0,.92);z-index:2;display:flex;align-items:center;justify-content:center;gap:clamp(1px,0.5vw,3px)}
+/* 상호 오버레이 — 카드 내부, 하단 빈 영역 중앙 */
+.intro-sangho-overlay{position:absolute;bottom:4%;left:50%;transform:translateX(-50%);width:48%;border:clamp(2px,0.4vw,3px) dashed #e74c3c;border-radius:4px;padding:clamp(2px,0.6vw,4px) clamp(4px,1.2vw,8px);text-align:center;background:rgba(254,229,0,.92);z-index:2;display:flex;align-items:center;justify-content:center;gap:clamp(1px,0.5vw,3px)}
 .intro-sangho-overlay .edit-icon{font-size:12px;flex-shrink:0}
 .intro-sangho-overlay .placeholder-text{font-size:16px;font-weight:900;color:#1a2e5a;letter-spacing:3px;line-height:1.2}
 .cursor-blink{display:inline-block;width:2px;height:18px;background:#1a2e5a;margin-left:2px;vertical-align:middle;animation:blink-cursor .8s step-end infinite}
@@ -200,7 +200,7 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f5f6f8;co
 .intro-btn.no-text .ib-arrow{color:#aaa;font-size:18px}
 
 /* 하단 공지 */
-.intro-notice{padding:10px 16px;text-align:center;font-size:15px;color:#fff;line-height:1.6;font-weight:700;background:#e74c3c;border-radius:10px;margin:8px 0 0}
+.intro-notice{padding:10px 16px;text-align:center;font-size:15px;color:#fff;line-height:1.6;font-weight:700;background:#e74c3c;border-radius:10px;margin:8px 0 12px}
 .intro-notice em{font-style:normal;color:#fff;font-weight:900;text-decoration:underline}
 
 /* 반응형 — 모든 디바이스에서 한 화면에 */
@@ -211,6 +211,9 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f5f6f8;co
 .intro-btn.input-text .ib-main{font-size:20px}
 .intro-btn.no-text .ib-main{font-size:15px}
 .intro-notice{font-size:13px;padding:8px 12px}
+.intro-sangho-overlay .placeholder-text{font-size:13px;letter-spacing:2px}
+.intro-sangho-overlay{width:52%;padding:2px 6px}
+.intro-sangho-overlay .edit-icon{font-size:10px}
 }
 @media(max-width:380px){
 .intro-sangho-overlay .placeholder-text{font-size:12px;letter-spacing:1px}
@@ -736,6 +739,77 @@ function setupAutoMode() {
 }
 
 /* ───── 인트로 페이지 ───── */
+/* 이미지 하단 크롭 + 오버레이 위치 자동 배치 */
+function setupSignImage(imgEl, overlay) {
+  var cvs = document.createElement('canvas');
+  var ctx = cvs.getContext('2d', {willReadFrequently: true});
+  var w = imgEl.naturalWidth, h = imgEl.naturalHeight;
+  cvs.width = w; cvs.height = h;
+  ctx.drawImage(imgEl, 0, 0);
+
+  var x0 = Math.floor(w*0.2), sw = Math.floor(w*0.6);
+
+  /* 1) 맨 아래줄 색 = 테두리색 → 위로 올라가며 시안 시작점 찾기 */
+  var btm = ctx.getImageData(x0, h-2, sw, 1).data;
+  var bR=0, bG=0, bB=0, bc=0;
+  for(var i=0;i<btm.length;i+=4){bR+=btm[i];bG+=btm[i+1];bB+=btm[i+2];bc++;}
+  bR/=bc; bG/=bc; bB/=bc;
+
+  var signEnd = h; /* 시안이 끝나는 줄 (테두리 시작) */
+  for(var row=h-1; row>=Math.floor(h*0.5); row--){
+    var rd = ctx.getImageData(x0, row, sw, 1).data;
+    var diff=0;
+    for(var p=0;p<rd.length;p+=4){
+      if(Math.abs(rd[p]-bR)+Math.abs(rd[p+1]-bG)+Math.abs(rd[p+2]-bB)>50) diff++;
+    }
+    if(diff/sw > 0.15){ signEnd=row+1; break; }
+  }
+
+  /* 크롭 적용 */
+  var cropPct = ((h - signEnd) / h) * 100;
+  if(cropPct > 1){
+    imgEl.style.marginBottom = '-' + cropPct.toFixed(1) + '%';
+    console.log('[크롭] 테두리 rgb('+Math.round(bR)+','+Math.round(bG)+','+Math.round(bB)+') / 크롭: '+cropPct.toFixed(1)+'% (signEnd='+signEnd+')');
+  }
+
+  /* 2) signEnd 바로 위 줄 색 = 시안 배경색 → 위로 올라가며 콘텐츠 끝 찾기 */
+  if(overlay && signEnd < h){
+    var bgd = ctx.getImageData(x0, Math.max(signEnd-5,0), sw, 1).data;
+    var sR=0, sG=0, sB=0, sc=0;
+    for(var j=0;j<bgd.length;j+=4){sR+=bgd[j];sG+=bgd[j+1];sB+=bgd[j+2];sc++;}
+    sR/=sc; sG/=sc; sB/=sc;
+
+    var contentEnd = signEnd;
+    for(var r2=signEnd-1; r2>=Math.floor(h*0.5); r2--){
+      var rd2 = ctx.getImageData(x0, r2, sw, 1).data;
+      var diff2=0;
+      for(var p2=0;p2<rd2.length;p2+=4){
+        if(Math.abs(rd2[p2]-sR)+Math.abs(rd2[p2+1]-sG)+Math.abs(rd2[p2+2]-sB)>50) diff2++;
+      }
+      if(diff2/sw > 0.15){ contentEnd=r2; break; }
+    }
+
+    /* 빈 영역: contentEnd ~ signEnd (원본 px) */
+    /* 보이는 이미지 높이 = signEnd px → 비율 계산 */
+    var blankCenter = (contentEnd + signEnd) / 2;
+    var fromBottomPct = ((signEnd - blankCenter) / signEnd) * 100;
+
+    overlay.style.bottom = fromBottomPct.toFixed(1) + '%';
+    overlay.style.transform = 'translateX(-50%) translateY(50%)';
+
+    /* 시안 배경 밝기 → 어두우면 흰글자 */
+    var bright = (sR*299 + sG*587 + sB*114) / 1000;
+    if(bright < 80){
+      overlay.style.background = 'rgba(0,0,0,0.65)';
+      overlay.style.borderColor = '#fff';
+      overlay.querySelector('.placeholder-text').style.color = '#fff';
+      var cur = overlay.querySelector('.cursor-blink');
+      if(cur) cur.style.background = '#fff';
+    }
+    console.log('[오버레이] 시안배경 rgb('+Math.round(sR)+','+Math.round(sG)+','+Math.round(sB)+') 밝기='+bright.toFixed(0)+' / contentEnd='+contentEnd+' signEnd='+signEnd+' → bottom:'+fromBottomPct.toFixed(1)+'%');
+  }
+}
+
 function buildIntroPage(designs) {
   const wrap = document.getElementById('introSingle');
   wrap.innerHTML = '';
@@ -743,6 +817,13 @@ function buildIntroPage(designs) {
   const previewArea = document.createElement('div');
   previewArea.className = 'intro-preview-area';
   previewArea.innerHTML = '<div class="intro-preview-card"><img src="' + des.src + '" alt="시안 ' + des.name + '"><div class="intro-sangho-overlay"><span class="edit-icon">✏️</span><span class="placeholder-text"><span id="introTypingText"></span><span class="cursor-blink"></span></span></div></div>';
+
+  /* 이미지 하단 크롭 + 오버레이 위치 자동 배치 */
+  var imgEl = previewArea.querySelector('.intro-preview-card img');
+  var overlay = previewArea.querySelector('.intro-sangho-overlay');
+  if (imgEl.complete && imgEl.naturalWidth > 0) { setupSignImage(imgEl, overlay); }
+  else { imgEl.addEventListener('load', function(){ setupSignImage(imgEl, overlay); }); }
+
   const bottom = document.createElement('div');
   bottom.className = 'intro-bottom';
   bottom.innerHTML = '<div class="intro-arrow-up"><svg viewBox="0 0 60 40" fill="none"><path d="M30 5 L55 35 H5 Z" fill="#1a2e5a"/></svg></div>';
